@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,19 +24,7 @@ namespace WindowsFormsApp1
         {
 
         }
-        private void GaussFilter (double [,] data, double frequency)
-        {
-            int lines = data.GetLength(0);
-            int columns = data.GetLength(1);
-            double d, r;
-            for (int i = 0; i < lines; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    data[i, j] = data[i, j] * frequency;
-                }
-            }
-        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             var ofd = new OpenFileDialog();
@@ -45,7 +32,42 @@ namespace WindowsFormsApp1
             if (ofd.ShowDialog(this) == DialogResult.OK)
                 pictureBox1.Image = Image.FromFile(ofd.FileName);
         }
-        
+
+
+
+        public static void IDCT_test(double[,] data)
+        {
+            int rows = data.GetLength(0);
+            int cols = data.GetLength(1);
+
+            double[] row = new double[cols];
+            double[] col = new double[rows];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < row.Length; j++)
+                    row[j] = data[i, j];
+
+                //DCT(row);
+                Accord.Math.CosineTransform.IDCT(row);
+
+                for (int j = 0; j < row.Length; j++)
+                    data[i, j] = row[j];
+            }
+
+            for (int j = 0; j < cols; j++)
+            {
+                for (int i = 0; i < col.Length; i++)
+                    col[i] = data[i, j];
+                Accord.Math.CosineTransform.IDCT(col);
+               // DCT(col);
+
+                for (int i = 0; i < col.Length; i++)
+                    data[i, j] = col[i];
+            }
+        }
+
+
         private void button_do_Click(object sender, EventArgs e)
         {
             Bitmap bmp = new Bitmap(pictureBox1.Image);
@@ -55,63 +77,150 @@ namespace WindowsFormsApp1
             System.Drawing.Imaging.BitmapData bmpData =
                 bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
                 bmp.PixelFormat);
-
+            textBox1.Text = textBox1.Text + bmp.Width.ToString() +"x"+ bmp.Height.ToString() + "   ";
             // Get the address of the first line.
             IntPtr ptr = bmpData.Scan0;
 
             // Declare an array to hold the bytes of the bitmap.
             int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
-            byte[] rgbValues = new byte[bytes];
-            double[] DCT1 = new double[bytes];
+            byte[] rgbValues = new byte[bytes];   
+
             // Copy the RGB values into the array.
             //System.Runtime.InteropServices.Marshal.Copy(ptr, DCT1, 0, bytes);
             System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
-            rgbValues.CopyTo(DCT1,0);
-            Accord.Math.CosineTransform.DCT(DCT1);
-            
-            for (int i=0; i < 15; i++)
+
+            double[,] DCT_R = new double[bmp.Height, bmp.Width]; //Массивы для частот каналов
+            double[,] DCT_G = new double[bmp.Height, bmp.Width];
+            double[,] DCT_B = new double[bmp.Height, bmp.Width];
+            int k = 0;
+            for (int i = 0; i < bmp.Height; i++) //Заполнение матриц каналов
             {
-                textBox1.Text = textBox1.Text + rgbValues[i] + "-" + DCT1[i] + "  ";
+                for (int j = 0; j < bmp.Width; j++)
+                {
+                    DCT_R[i, j] = Convert.ToDouble(rgbValues[k]);
+                    DCT_G[i, j] = Convert.ToDouble(rgbValues[k + 1]);
+                    DCT_B[i, j] = Convert.ToDouble(rgbValues[k + 2]);
+                    k += 3;
+                }
+            }     
+            
+            Accord.Math.CosineTransform.DCT(DCT_R); // DCT по каждому каналу 
+            Accord.Math.CosineTransform.DCT(DCT_G);
+            Accord.Math.CosineTransform.DCT(DCT_B);
+
+
+
+
+
+
+
+           
+            
+            //Accord.Math.CosineTransform.IDCT(DCT_R); // IDCT по каждому каналу 
+            //Accord.Math.CosineTransform.IDCT(DCT_G);
+            //Accord.Math.CosineTransform.IDCT(DCT_B);
+
+            IDCT_test(DCT_R); // IDCT по каждому каналу 
+            IDCT_test(DCT_G);
+            IDCT_test(DCT_B);
+            k = 0;
+            for (int i = 0; i < bmp.Height; i++) //Перезаполнение байтового массива для вывода картинки
+            {
+                for (int j = 0; j < bmp.Width; j++)
+                {
+                    if(DCT_R[i, j] <= 0)
+                    {
+                        rgbValues[k] = 0;
+                    }
+                    else if ((DCT_R[i, j] >= 255))
+                    {
+                        rgbValues[k] = 255;
+                    }
+                    else
+                    {
+                        rgbValues[k] = Convert.ToByte(DCT_R[i, j]);
+                    }
+
+                    if (DCT_G[i, j] <= 0)
+                    {
+                        rgbValues[k+1] = 0;
+                    }
+                    else if ((DCT_G[i, j] >= 255))
+                    {
+                        rgbValues[k+1] = 255;
+                    }
+                    else
+                    {
+                        rgbValues[k+1] = Convert.ToByte(DCT_G[i, j]);
+                    }
+
+                    if (DCT_B[i, j] <= 0)
+                    {
+                        rgbValues[k + 2] = 0;
+                    }
+                    else if ((DCT_B[i, j] >= 255))
+                    {
+                        rgbValues[k + 2] = 255;
+                    }
+                    else
+                    {
+                        rgbValues[k + 2] = Convert.ToByte(DCT_B[i, j]);
+                    }
+                    k += 3;
+                }
             }
 
 
 
+            for (int i=0; i < 15; i++)
+            {
+                textBox1.Text = textBox1.Text + rgbValues[i] + "-" + DCT_R[i,0] + "-" + DCT_G[i, 0] + "-"+ DCT_B[i, 0]+ "   ";
+            }
 
+
+
+           
 
 
 
 
 
             System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
-           
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.Image = bmp;
             // Unlock the bits.
             bmp.UnlockBits(bmpData);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button_save_Click(object sender, EventArgs e)
         {
-            Random rnd = new Random();
-            double[,] test = new double[5,8];
-            string txt = null;
-            for (int i = 0; i < 5; i++)
+            if (pictureBox2.Image != null) //если в pictureBox есть изображение
             {
-                for (int j = 0; j < 8; j++)
+                //создание диалогового окна "Сохранить как..", для сохранения изображения
+                SaveFileDialog savedialog = new SaveFileDialog();
+                savedialog.Title = "Сохранить картинку как...";
+                //отображать ли предупреждение, если пользователь указывает имя уже существующего файла
+                savedialog.OverwritePrompt = true;
+                //отображать ли предупреждение, если пользователь указывает несуществующий путь
+                savedialog.CheckPathExists = true;
+                //список форматов файла, отображаемый в поле "Тип файла"
+                savedialog.Filter = "Image Files(*.BMP)|*.BMP|Image Files(*.JPG)|*.JPG|Image Files(*.GIF)|*.GIF|Image Files(*.PNG)|*.PNG|All files (*.*)|*.*";
+                //отображается ли кнопка "Справка" в диалоговом окне
+                savedialog.ShowHelp = true;
+                if (savedialog.ShowDialog() == DialogResult.OK) //если в диалоговом окне нажата кнопка "ОК"
                 {
-                    test[i, j] = rnd.Next(0, 10);
-                    txt = txt + " " + test[i, j].ToString();
+                    try
+                    {
+                        pictureBox2.Image.Save(savedialog.FileName);
+                        //pictureBox2.Image.Save(savedialog.FileName, System.Drawing.Imaging.ImageFormat.png);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Невозможно сохранить изображение", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
-            GaussFilter(test, 5);
-            txt = txt + "__";
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    txt = txt + " " + test[i, j].ToString();
-                }
-            }
-            textBox2.Text = txt;
-            
         }
     }
 }
