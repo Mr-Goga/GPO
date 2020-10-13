@@ -24,6 +24,20 @@ namespace WindowsFormsApp1
         {
 
         }
+        private void GaussFilter(double[,] data, double frequency)
+        {
+            int lines = data.GetLength(0);
+            int columns = data.GetLength(1);
+            double d;
+            for (int i = 0; i < lines; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    d = Math.Sqrt(Math.Pow((i-lines/2),2) + Math.Pow((j - columns / 2), 2));
+                    data[i, j] = data[i, j] * Math.Exp(-(d*d)/( frequency*frequency)) ;     
+                }
+            }
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -77,7 +91,7 @@ namespace WindowsFormsApp1
             System.Drawing.Imaging.BitmapData bmpData =
                 bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
                 bmp.PixelFormat);
-            textBox1.Text = textBox1.Text + bmp.Width.ToString() +"x"+ bmp.Height.ToString() + "   ";
+           
             // Get the address of the first line.
             IntPtr ptr = bmpData.Scan0;
 
@@ -100,22 +114,26 @@ namespace WindowsFormsApp1
                     DCT_R[i, j] = Convert.ToDouble(rgbValues[k]);
                     DCT_G[i, j] = Convert.ToDouble(rgbValues[k + 1]);
                     DCT_B[i, j] = Convert.ToDouble(rgbValues[k + 2]);
-                    k += 3;
+                    k += 4;
                 }
-            }     
-            
+            }
+            textBox1.Text = textBox1.Text + bmp.Width.ToString() + "x" + bmp.Height.ToString() + "   penis" + bytes.ToString() + "=" + (3* bmp.Height * bmp.Width).ToString() + "   ";
             Accord.Math.CosineTransform.DCT(DCT_R); // DCT по каждому каналу 
             Accord.Math.CosineTransform.DCT(DCT_G);
             Accord.Math.CosineTransform.DCT(DCT_B);
 
+           // Фильтр Гаусса
+            double frequencyGaus = 20;
+            GaussFilter(DCT_R, frequencyGaus);
+            GaussFilter(DCT_G, frequencyGaus);
+            GaussFilter(DCT_B, frequencyGaus);
 
 
 
 
 
 
-           
-            
+
             //Accord.Math.CosineTransform.IDCT(DCT_R); // IDCT по каждому каналу 
             //Accord.Math.CosineTransform.IDCT(DCT_G);
             //Accord.Math.CosineTransform.IDCT(DCT_B);
@@ -166,15 +184,16 @@ namespace WindowsFormsApp1
                     {
                         rgbValues[k + 2] = Convert.ToByte(DCT_B[i, j]);
                     }
-                    k += 3;
+                    //rgbValues[k + 3] = 0;
+                    k += 4;
                 }
             }
 
 
 
-            for (int i=0; i < 15; i++)
+            for (int i=0; i < 20; i++)
             {
-                textBox1.Text = textBox1.Text + rgbValues[i] + "-" + DCT_R[i,0] + "-" + DCT_G[i, 0] + "-"+ DCT_B[i, 0]+ "   ";
+                textBox1.Text = textBox1.Text + rgbValues[i] + "   ";
             }
 
 
