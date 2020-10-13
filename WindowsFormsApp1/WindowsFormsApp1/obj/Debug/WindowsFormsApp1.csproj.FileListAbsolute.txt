@@ -16,3 +16,21 @@ D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.
 D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.Math.dll
 D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.Math.xml
 D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.Math.Core.xml
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.dll.config
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.dll
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.Math.Core.dll
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.Math.dll
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.xml
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.Math.xml
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.Math.Core.xml
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csprojAssemblyReference.cache
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CopyComplete
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\Zver\Source\Repos\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
