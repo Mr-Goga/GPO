@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,7 +25,19 @@ namespace WindowsFormsApp1
         {
 
         }
-
+        private void GaussFilter (double [,] data, double frequency)
+        {
+            int lines = data.GetLength(0);
+            int columns = data.GetLength(1);
+            double d, r;
+            for (int i = 0; i < lines; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    data[i, j] = data[i, j] * frequency;
+                }
+            }
+        }
         private void button2_Click(object sender, EventArgs e)
         {
             var ofd = new OpenFileDialog();
@@ -32,7 +45,7 @@ namespace WindowsFormsApp1
             if (ofd.ShowDialog(this) == DialogResult.OK)
                 pictureBox1.Image = Image.FromFile(ofd.FileName);
         }
-
+        
         private void button_do_Click(object sender, EventArgs e)
         {
             Bitmap bmp = new Bitmap(pictureBox1.Image);
@@ -73,6 +86,32 @@ namespace WindowsFormsApp1
            
             // Unlock the bits.
             bmp.UnlockBits(bmpData);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            double[,] test = new double[5,8];
+            string txt = null;
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    test[i, j] = rnd.Next(0, 10);
+                    txt = txt + " " + test[i, j].ToString();
+                }
+            }
+            GaussFilter(test, 5);
+            txt = txt + "__";
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    txt = txt + " " + test[i, j].ToString();
+                }
+            }
+            textBox2.Text = txt;
+            
         }
     }
 }
