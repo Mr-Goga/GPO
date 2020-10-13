@@ -35,6 +35,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button_save = new System.Windows.Forms.Button();
+            this.textBox_frequencyGaus = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -97,11 +98,19 @@
             this.button_save.UseVisualStyleBackColor = true;
             this.button_save.Click += new System.EventHandler(this.button_save_Click);
             // 
+            // textBox_frequencyGaus
+            // 
+            this.textBox_frequencyGaus.Location = new System.Drawing.Point(193, 12);
+            this.textBox_frequencyGaus.Name = "textBox_frequencyGaus";
+            this.textBox_frequencyGaus.Size = new System.Drawing.Size(85, 20);
+            this.textBox_frequencyGaus.TabIndex = 6;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(738, 465);
+            this.Controls.Add(this.textBox_frequencyGaus);
             this.Controls.Add(this.button_save);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.pictureBox2);
@@ -127,6 +136,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button_save;
+        private System.Windows.Forms.TextBox textBox_frequencyGaus;
     }
 }
 

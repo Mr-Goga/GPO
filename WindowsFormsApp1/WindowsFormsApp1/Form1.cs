@@ -106,6 +106,7 @@ namespace WindowsFormsApp1
             double[,] DCT_R = new double[bmp.Height, bmp.Width]; //Массивы для частот каналов
             double[,] DCT_G = new double[bmp.Height, bmp.Width];
             double[,] DCT_B = new double[bmp.Height, bmp.Width];
+            double[,] DCT_A = new double[bmp.Height, bmp.Width];
             int k = 0;
             for (int i = 0; i < bmp.Height; i++) //Заполнение матриц каналов
             {
@@ -114,6 +115,7 @@ namespace WindowsFormsApp1
                     DCT_R[i, j] = Convert.ToDouble(rgbValues[k]);
                     DCT_G[i, j] = Convert.ToDouble(rgbValues[k + 1]);
                     DCT_B[i, j] = Convert.ToDouble(rgbValues[k + 2]);
+                    DCT_A[i, j] = Convert.ToDouble(rgbValues[k + 3]);
                     k += 4;
                 }
             }
@@ -121,13 +123,15 @@ namespace WindowsFormsApp1
             Accord.Math.CosineTransform.DCT(DCT_R); // DCT по каждому каналу 
             Accord.Math.CosineTransform.DCT(DCT_G);
             Accord.Math.CosineTransform.DCT(DCT_B);
+            Accord.Math.CosineTransform.DCT(DCT_A);// Альфа канал под вопросом
 
-           // Фильтр Гаусса
-            double frequencyGaus = 20;
+            // Фильтр Гаусса
+
+            double frequencyGaus = Convert.ToDouble(textBox_frequencyGaus.Text);
             GaussFilter(DCT_R, frequencyGaus);
             GaussFilter(DCT_G, frequencyGaus);
             GaussFilter(DCT_B, frequencyGaus);
-
+            //GaussFilter(DCT_A, frequencyGaus);
 
 
 
@@ -141,6 +145,7 @@ namespace WindowsFormsApp1
             IDCT_test(DCT_R); // IDCT по каждому каналу 
             IDCT_test(DCT_G);
             IDCT_test(DCT_B);
+            IDCT_test(DCT_A);
             k = 0;
             for (int i = 0; i < bmp.Height; i++) //Перезаполнение байтового массива для вывода картинки
             {
@@ -184,7 +189,21 @@ namespace WindowsFormsApp1
                     {
                         rgbValues[k + 2] = Convert.ToByte(DCT_B[i, j]);
                     }
-                    //rgbValues[k + 3] = 0;
+
+                   
+                    if (DCT_A[i, j] <= 0)
+                    {
+                        rgbValues[k + 3] = 0;
+                    }
+                    else if ((DCT_A[i, j] >= 255))
+                    {
+                        rgbValues[k + 3] = 255;
+                    }
+                    else
+                    {
+                        rgbValues[k + 3] = Convert.ToByte(DCT_A[i, j]);
+                    }
+                    
                     k += 4;
                 }
             }
