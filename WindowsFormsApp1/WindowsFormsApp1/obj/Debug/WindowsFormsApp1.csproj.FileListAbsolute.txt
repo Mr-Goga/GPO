@@ -7,3 +7,12 @@ D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Windows
 D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.dll.config
+D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.dll
+D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.xml
+D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CopyComplete
+D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.Math.Core.dll
+D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.Math.dll
+D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.Math.xml
+D:\Visual Studio\project\GPO\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Accord.Math.Core.xml
