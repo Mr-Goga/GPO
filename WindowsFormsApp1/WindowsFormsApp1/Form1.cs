@@ -146,7 +146,7 @@ namespace WindowsFormsApp1
 
 
 
-            textBox1.Text = textBox1.Text + bmp.Width.ToString() + "x" + bmp.Height.ToString() + "   penis" + bytes.ToString() + "=" + (3* bmp.Height * bmp.Width).ToString() + "   ";
+            textBox1.Text = textBox1.Text + bmp.Width.ToString() + "x" + bmp.Height.ToString() + "        " + bytes.ToString() + "=" + (3* bmp.Height * bmp.Width).ToString() + "   ";
             Accord.Math.CosineTransform.DCT(DCT_R); // DCT по каждому каналу 
             Accord.Math.CosineTransform.DCT(DCT_G);
             Accord.Math.CosineTransform.DCT(DCT_B);
