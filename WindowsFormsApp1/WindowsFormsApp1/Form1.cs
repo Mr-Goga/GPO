@@ -120,6 +120,8 @@ namespace WindowsFormsApp1
             double[,] DCT_G1 = new double[bmp1.Height, bmp1.Width];
             double[,] DCT_B1 = new double[bmp1.Height, bmp1.Width];
             double[,] DCT_A1 = new double[bmp1.Height, bmp1.Width];
+
+
             int k = 0;
             for (int i = 0; i < bmp.Height; i++) //Заполнение матриц каналов
             {
@@ -151,7 +153,7 @@ namespace WindowsFormsApp1
             Accord.Math.CosineTransform.DCT(DCT_G);
             Accord.Math.CosineTransform.DCT(DCT_B);
             //Accord.Math.CosineTransform.DCT(DCT_A);// Альфа канал под вопросом
-
+            
 
             Accord.Math.CosineTransform.DCT(DCT_R1); // DCT по каждому каналу 
             Accord.Math.CosineTransform.DCT(DCT_G1);
@@ -170,6 +172,17 @@ namespace WindowsFormsApp1
             GaussFilter(DCT_G1, frequencyGaus1);
             GaussFilter(DCT_B1, frequencyGaus1);
             //GaussFilter(DCT_A1, frequencyGaus1);
+           
+            
+            double[,] DCT_R_tmp = new double[bmp1.Height, bmp1.Width]; //Массивы для частот каналов
+            double[,] DCT_G_tmp = new double[bmp1.Height, bmp1.Width];
+            double[,] DCT_B_tmp = new double[bmp1.Height, bmp1.Width];
+            double[,] DCT_A_tmp = new double[bmp1.Height, bmp1.Width];
+            DCT_R.CopyTo(DCT_R_tmp);
+            DCT_G.CopyTo(DCT_G_tmp);
+            DCT_B.CopyTo(DCT_B_tmp);
+            DCT_R.CopyTo(DCT_R_tmp);
+
 
             double R = (frequencyGaus + frequencyGaus1) / (Math.Sqrt(Convert.ToDouble(bmp.Width * bmp.Width + bmp.Height * bmp.Height) / 2.0));
 
@@ -185,8 +198,49 @@ namespace WindowsFormsApp1
             }
 
 
+            //Расчет корреляции
+            if (checkBox1.Checked == true)
+            {
+                
+                double numerator_R = 0, W1_R = 0, W2_R = 0, numerator_G = 0, W1_G = 0, W2_G = 0, numerator_B = 0, W1_B = 0, W2_B = 0;
+                double numerator_R1 = 0, W1_R1 = 0, W2_R1 = 0, numerator_G1 = 0, W1_G1 = 0, W2_G1 = 0, numerator_B1 = 0, W1_B1 = 0, W2_B1 = 0;
+                for (int i = 0; i < bmp.Height; i++)
+                {
+                    for (int j = 0; j < bmp.Width; j++)
+                    {
 
+                        //Первая картинка
+                        numerator_R = numerator_R + DCT_R_tmp[i, j] * DCT_R[i, j];
+                        W1_R = W1_R + DCT_R_tmp[i, j] * DCT_R_tmp[i, j];
+                        W2_R = W2_R + DCT_R[i, j] * DCT_R[i, j];
+                       
+                        numerator_G = numerator_G + DCT_G_tmp[i, j] * DCT_G[i, j];
+                        W1_G = W1_G + DCT_G_tmp[i, j] * DCT_G_tmp[i, j];
+                        W2_G = W2_G + DCT_G[i, j] * DCT_G[i, j];
 
+                        numerator_B = numerator_B + DCT_B_tmp[i, j] * DCT_B[i, j];
+                        W1_B = W1_B + DCT_B_tmp[i, j] * DCT_B_tmp[i, j];
+                        W2_B = W2_B + DCT_B[i, j] * DCT_B[i, j];
+                        
+                        //Вторая картинка
+                        numerator_R1 = numerator_R1 + DCT_R1[i, j] * DCT_R[i, j];
+                        W1_R1 = W1_R1 + DCT_R1[i, j] * DCT_R1[i, j];
+                        W2_R1 = W2_R1 + DCT_R[i, j] * DCT_R[i, j];
+
+                        numerator_G1 = numerator_G1 + DCT_G1[i, j] * DCT_G[i, j];
+                        W1_G1 = W1_G1 + DCT_G1[i, j] * DCT_G1[i, j];
+                        W2_G1 = W2_G1 + DCT_G[i, j] * DCT_G[i, j];
+
+                        numerator_B1 = numerator_B1 + DCT_B1[i, j] * DCT_B[i, j];
+                        W1_B1 = W1_B1 + DCT_B1[i, j] * DCT_B1[i, j];
+                        W2_B1 = W2_B1 + DCT_B[i, j] * DCT_B[i, j];
+                        // я знаю что это говнокод, самому грустно(
+                    }
+
+                }
+                label3.Text = ((numerator_R / (Math.Sqrt(W1_R) * Math.Sqrt(W2_R))+ numerator_G / (Math.Sqrt(W1_G) * Math.Sqrt(W2_G))+ numerator_B / (Math.Sqrt(W1_B) * Math.Sqrt(W2_B)))/3).ToString();
+                label4.Text = ((numerator_R1 / (Math.Sqrt(W1_R1) * Math.Sqrt(W2_R1)) + numerator_G1 / (Math.Sqrt(W1_G1) * Math.Sqrt(W2_G1)) + numerator_B1 / (Math.Sqrt(W1_B1) * Math.Sqrt(W2_B1))) / 3).ToString();
+            }
 
 
 
@@ -323,6 +377,11 @@ namespace WindowsFormsApp1
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
         {
 
         }
