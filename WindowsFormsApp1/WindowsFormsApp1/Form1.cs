@@ -159,8 +159,28 @@ namespace WindowsFormsApp1
             Accord.Math.CosineTransform.DCT(DCT_G1);
             Accord.Math.CosineTransform.DCT(DCT_B1);
             //Accord.Math.CosineTransform.DCT(DCT_A1);// Альфа канал под вопросом
-            // Фильтр Гаусса
 
+            
+            //Расчет корреляции копирование исходных данных частот            
+                double[,] DCT_R_tmp = new double[bmp1.Height, bmp1.Width]; //Массивы для частот каналов
+                double[,] DCT_G_tmp = new double[bmp1.Height, bmp1.Width];
+                double[,] DCT_B_tmp = new double[bmp1.Height, bmp1.Width];
+                double[,] DCT_A_tmp = new double[bmp1.Height, bmp1.Width];
+                DCT_R.CopyTo(DCT_R_tmp);
+                DCT_G.CopyTo(DCT_G_tmp);
+                DCT_B.CopyTo(DCT_B_tmp);
+                DCT_R.CopyTo(DCT_R_tmp);
+
+                double[,] DCT_R_tmp1 = new double[bmp1.Height, bmp1.Width]; //Массивы для частот каналов
+                double[,] DCT_G_tmp1 = new double[bmp1.Height, bmp1.Width];
+                double[,] DCT_B_tmp1 = new double[bmp1.Height, bmp1.Width];
+                double[,] DCT_A_tmp1 = new double[bmp1.Height, bmp1.Width];
+                DCT_R1.CopyTo(DCT_R_tmp1);
+                DCT_G1.CopyTo(DCT_G_tmp1);
+                DCT_B1.CopyTo(DCT_B_tmp1);
+                DCT_R1.CopyTo(DCT_R_tmp1);
+            
+            // Фильтр Гаусса
             double frequencyGaus = Convert.ToDouble(textBox_frequencyGaus1.Text);
             GaussFilter(DCT_R, frequencyGaus);
             GaussFilter(DCT_G, frequencyGaus);
@@ -174,14 +194,7 @@ namespace WindowsFormsApp1
             //GaussFilter(DCT_A1, frequencyGaus1);
            
             
-            double[,] DCT_R_tmp = new double[bmp1.Height, bmp1.Width]; //Массивы для частот каналов
-            double[,] DCT_G_tmp = new double[bmp1.Height, bmp1.Width];
-            double[,] DCT_B_tmp = new double[bmp1.Height, bmp1.Width];
-            double[,] DCT_A_tmp = new double[bmp1.Height, bmp1.Width];
-            DCT_R.CopyTo(DCT_R_tmp);
-            DCT_G.CopyTo(DCT_G_tmp);
-            DCT_B.CopyTo(DCT_B_tmp);
-            DCT_R.CopyTo(DCT_R_tmp);
+           
 
 
             double R = (frequencyGaus + frequencyGaus1) / (Math.Sqrt(Convert.ToDouble(bmp.Width * bmp.Width + bmp.Height * bmp.Height) / 2.0));
@@ -201,7 +214,12 @@ namespace WindowsFormsApp1
             //Расчет корреляции
             if (checkBox1.Checked == true)
             {
-                
+                DCT_R_tmp1.CopyTo(DCT_R1);
+                DCT_G_tmp1.CopyTo(DCT_G1);
+                DCT_B_tmp1.CopyTo(DCT_B1);
+                DCT_R_tmp1.CopyTo(DCT_R1);
+
+
                 double numerator_R = 0, W1_R = 0, W2_R = 0, numerator_G = 0, W1_G = 0, W2_G = 0, numerator_B = 0, W1_B = 0, W2_B = 0;
                 double numerator_R1 = 0, W1_R1 = 0, W2_R1 = 0, numerator_G1 = 0, W1_G1 = 0, W2_G1 = 0, numerator_B1 = 0, W1_B1 = 0, W2_B1 = 0;
                 for (int i = 0; i < bmp.Height; i++)
