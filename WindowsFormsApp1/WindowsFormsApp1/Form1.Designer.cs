@@ -169,6 +169,7 @@
             this.checkBox1.TabIndex = 12;
             this.checkBox1.Text = "Корреляция";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // label3
             // 
