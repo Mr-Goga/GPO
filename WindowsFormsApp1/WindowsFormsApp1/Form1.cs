@@ -103,6 +103,9 @@ namespace WindowsFormsApp1
             int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
             byte[] rgbValues = new byte[bytes];
 
+            byte[] rgbValues_tmp = new byte[bytes];
+            rgbValues.CopyTo(rgbValues_tmp);
+
             int bytes1 = Math.Abs(bmpData1.Stride) * bmp1.Height;
             byte[] rgbValues1 = new byte[bytes1];
 
@@ -256,8 +259,8 @@ namespace WindowsFormsApp1
                     }
 
                 }
-                label3.Text = ((numerator_R / (Math.Sqrt(W1_R) * Math.Sqrt(W2_R))+ numerator_G / (Math.Sqrt(W1_G) * Math.Sqrt(W2_G))+ numerator_B / (Math.Sqrt(W1_B) * Math.Sqrt(W2_B)))/3).ToString();
-                label4.Text = ((numerator_R1 / (Math.Sqrt(W1_R1) * Math.Sqrt(W2_R1)) + numerator_G1 / (Math.Sqrt(W1_G1) * Math.Sqrt(W2_G1)) + numerator_B1 / (Math.Sqrt(W1_B1) * Math.Sqrt(W2_B1))) / 3).ToString();
+                textBox2.Text = ((numerator_R / (Math.Sqrt(W1_R) * Math.Sqrt(W2_R))+ numerator_G / (Math.Sqrt(W1_G) * Math.Sqrt(W2_G))+ numerator_B / (Math.Sqrt(W1_B) * Math.Sqrt(W2_B)))/3).ToString();
+                textBox3.Text = ((numerator_R1 / (Math.Sqrt(W1_R1) * Math.Sqrt(W2_R1)) + numerator_G1 / (Math.Sqrt(W1_G1) * Math.Sqrt(W2_G1)) + numerator_B1 / (Math.Sqrt(W1_B1) * Math.Sqrt(W2_B1))) / 3).ToString();
             }
 
 
@@ -342,13 +345,51 @@ namespace WindowsFormsApp1
 
 
 
-           
+            if (checkBox2.Checked == true)
+            {
+
+                double numerator_R = 0, W1_R = 0, W2_R = 0, numerator_G = 0, W1_G = 0, W2_G = 0, numerator_B = 0, W1_B = 0, W2_B = 0;
+                double numerator_R1 = 0, W1_R1 = 0, W2_R1 = 0, numerator_G1 = 0, W1_G1 = 0, W2_G1 = 0, numerator_B1 = 0, W1_B1 = 0, W2_B1 = 0;
+
+                for (int j = 0; j < rgbValues.Length; j += 4)
+                {
+
+                    //Первая картинка
+                    numerator_R = numerator_R + rgbValues_tmp[j] * rgbValues[j];
+                    W1_R = W1_R + rgbValues_tmp[j] * rgbValues_tmp[j];
+                    W2_R = W2_R + rgbValues[j] * rgbValues[j];
+
+                    numerator_G = numerator_G + rgbValues_tmp[j + 1] * rgbValues[j + 1];
+                    W1_G = W1_G + rgbValues_tmp[j + 1] * rgbValues_tmp[j + 1];
+                    W2_G = W2_G + rgbValues[j + 1] * rgbValues[j + 1];
+
+                    numerator_B = numerator_B + rgbValues_tmp[j + 2] * rgbValues[j + 2];
+                    W1_B = W1_B + rgbValues_tmp[j + 2] * rgbValues_tmp[j + 2];
+                    W2_B = W2_B + rgbValues[j + 2] * rgbValues[j + 2];
+
+                    //Вторая картинка
+                    numerator_R1 = numerator_R1 + rgbValues1[j] * rgbValues[j];
+                    W1_R1 = W1_R1 + rgbValues1[j] * rgbValues1[j];
+                    W2_R1 = W2_R1 + rgbValues[j] * rgbValues[j];
+
+                    numerator_G1 = numerator_G1 + rgbValues1[j + 1] * rgbValues[j + 1];
+                    W1_G1 = W1_G1 + rgbValues1[j + 1] * rgbValues1[j + 1];
+                    W2_G1 = W2_G1 + rgbValues[j + 1] * rgbValues[j + 1];
+
+                    numerator_B1 = numerator_B1 + rgbValues1[j + 2] * rgbValues[j + 2];
+                    W1_B1 = W1_B1 + rgbValues1[j + 2] * rgbValues1[j + 2];
+                    W2_B1 = W2_B1 + rgbValues[j + 2] * rgbValues[j + 2];
+                    // я знаю что это говнокод, самому грустно(
+
+                }
+                textBox4.Text = ((numerator_R / (Math.Sqrt(W1_R) * Math.Sqrt(W2_R)) + numerator_G / (Math.Sqrt(W1_G) * Math.Sqrt(W2_G)) + numerator_B / (Math.Sqrt(W1_B) * Math.Sqrt(W2_B))) / 3).ToString();
+                textBox5.Text = ((numerator_R1 / (Math.Sqrt(W1_R1) * Math.Sqrt(W2_R1)) + numerator_G1 / (Math.Sqrt(W1_G1) * Math.Sqrt(W2_G1)) + numerator_B1 / (Math.Sqrt(W1_B1) * Math.Sqrt(W2_B1))) / 3).ToString();
+            }
 
 
 
 
-
-            System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+                System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.Image = bmp;
             // Unlock the bits.
