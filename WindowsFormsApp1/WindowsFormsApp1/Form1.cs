@@ -104,7 +104,7 @@ namespace WindowsFormsApp1
             byte[] rgbValues = new byte[bytes];
 
             byte[] rgbValues_tmp = new byte[bytes];
-            rgbValues.CopyTo(rgbValues_tmp);
+            
 
             int bytes1 = Math.Abs(bmpData1.Stride) * bmp1.Height;
             byte[] rgbValues1 = new byte[bytes1];
@@ -113,6 +113,7 @@ namespace WindowsFormsApp1
             //System.Runtime.InteropServices.Marshal.Copy(ptr, DCT1, 0, bytes);
             System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
             System.Runtime.InteropServices.Marshal.Copy(ptr1, rgbValues1, 0, bytes1);
+            rgbValues.CopyTo(rgbValues_tmp);
 
             double[,] DCT_R = new double[bmp.Height, bmp.Width]; //Массивы для частот каналов
             double[,] DCT_G = new double[bmp.Height, bmp.Width];
@@ -259,8 +260,8 @@ namespace WindowsFormsApp1
                     }
 
                 }
-                textBox2.Text = ((numerator_R / (Math.Sqrt(W1_R) * Math.Sqrt(W2_R))+ numerator_G / (Math.Sqrt(W1_G) * Math.Sqrt(W2_G))+ numerator_B / (Math.Sqrt(W1_B) * Math.Sqrt(W2_B)))/3).ToString();
-                textBox3.Text = ((numerator_R1 / (Math.Sqrt(W1_R1) * Math.Sqrt(W2_R1)) + numerator_G1 / (Math.Sqrt(W1_G1) * Math.Sqrt(W2_G1)) + numerator_B1 / (Math.Sqrt(W1_B1) * Math.Sqrt(W2_B1))) / 3).ToString();
+                textBox2.Text = ((numerator_R / (Math.Sqrt(W1_R) * Math.Sqrt(W2_R))+ numerator_G / (Math.Sqrt(W1_G) * Math.Sqrt(W2_G))+ numerator_B / (Math.Sqrt(W1_B) * Math.Sqrt(W2_B)))/3.0).ToString();
+                textBox3.Text = ((numerator_R1 / (Math.Sqrt(W1_R1) * Math.Sqrt(W2_R1)) + numerator_G1 / (Math.Sqrt(W1_G1) * Math.Sqrt(W2_G1)) + numerator_B1 / (Math.Sqrt(W1_B1) * Math.Sqrt(W2_B1))) / 3.0).ToString();
             }
 
 
@@ -382,8 +383,8 @@ namespace WindowsFormsApp1
                     // я знаю что это говнокод, самому грустно(
 
                 }
-                textBox4.Text = ((numerator_R / (Math.Sqrt(W1_R) * Math.Sqrt(W2_R)) + numerator_G / (Math.Sqrt(W1_G) * Math.Sqrt(W2_G)) + numerator_B / (Math.Sqrt(W1_B) * Math.Sqrt(W2_B))) / 3).ToString();
-                textBox5.Text = ((numerator_R1 / (Math.Sqrt(W1_R1) * Math.Sqrt(W2_R1)) + numerator_G1 / (Math.Sqrt(W1_G1) * Math.Sqrt(W2_G1)) + numerator_B1 / (Math.Sqrt(W1_B1) * Math.Sqrt(W2_B1))) / 3).ToString();
+                textBox4.Text = ((numerator_R / (Math.Sqrt(W1_R) * Math.Sqrt(W2_R)) + numerator_G / (Math.Sqrt(W1_G) * Math.Sqrt(W2_G)) + numerator_B / (Math.Sqrt(W1_B) * Math.Sqrt(W2_B))) / 3.0).ToString();
+                textBox5.Text = ((numerator_R1 / (Math.Sqrt(W1_R1) * Math.Sqrt(W2_R1)) + numerator_G1 / (Math.Sqrt(W1_G1) * Math.Sqrt(W2_G1)) + numerator_B1 / (Math.Sqrt(W1_B1) * Math.Sqrt(W2_B1))) / 3.0).ToString();
             }
 
 
