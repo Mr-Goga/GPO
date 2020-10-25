@@ -49,6 +49,7 @@
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.Test1Rom = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -231,11 +232,21 @@
             this.checkBox2.Text = "Корреляция пиксели";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
+            // Test1Rom
+            // 
+            this.Test1Rom.Location = new System.Drawing.Point(384, 176);
+            this.Test1Rom.Name = "Test1Rom";
+            this.Test1Rom.Size = new System.Drawing.Size(75, 23);
+            this.Test1Rom.TabIndex = 22;
+            this.Test1Rom.Text = "Привёт";
+            this.Test1Rom.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(738, 465);
+            this.Controls.Add(this.Test1Rom);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.textBox4);
@@ -290,6 +301,7 @@
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Button Test1Rom;
     }
 }
 
