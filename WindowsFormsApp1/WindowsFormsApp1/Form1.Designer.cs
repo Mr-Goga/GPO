@@ -53,6 +53,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -62,7 +63,7 @@
             // 
             // button_do
             // 
-            this.button_do.Location = new System.Drawing.Point(250, 153);
+            this.button_do.Location = new System.Drawing.Point(248, 112);
             this.button_do.Name = "button_do";
             this.button_do.Size = new System.Drawing.Size(102, 23);
             this.button_do.TabIndex = 0;
@@ -105,7 +106,7 @@
             this.textBox1.Location = new System.Drawing.Point(441, 244);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(330, 235);
+            this.textBox1.Size = new System.Drawing.Size(366, 234);
             this.textBox1.TabIndex = 4;
             // 
             // button_save
@@ -151,7 +152,6 @@
             this.label1.Size = new System.Drawing.Size(162, 13);
             this.label1.TabIndex = 9;
             this.label1.Text = "Частота среза для 1 картинки";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -172,13 +172,12 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(248, 194);
+            this.checkBox1.Location = new System.Drawing.Point(248, 139);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(129, 17);
             this.checkBox1.TabIndex = 12;
             this.checkBox1.Text = "Корреляция частота";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // label5
             // 
@@ -188,7 +187,6 @@
             this.label5.Size = new System.Drawing.Size(142, 13);
             this.label5.TabIndex = 15;
             this.label5.Text = "Корреляция 1 с выходным";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 
@@ -230,7 +228,7 @@
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(248, 217);
+            this.checkBox2.Location = new System.Drawing.Point(248, 162);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(132, 17);
             this.checkBox2.TabIndex = 21;
@@ -245,11 +243,12 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(823, 519);
+            this.tabControl1.Size = new System.Drawing.Size(824, 519);
             this.tabControl1.TabIndex = 22;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.checkBox3);
             this.tabPage1.Controls.Add(this.pictureBox2);
             this.tabPage1.Controls.Add(this.checkBox2);
             this.tabPage1.Controls.Add(this.button_do);
@@ -273,7 +272,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(815, 493);
+            this.tabPage1.Size = new System.Drawing.Size(816, 493);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Встраивание";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -283,7 +282,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(815, 493);
+            this.tabPage2.Size = new System.Drawing.Size(816, 493);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Извлечение_Е";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -293,16 +292,26 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(815, 493);
+            this.tabPage3.Size = new System.Drawing.Size(816, 493);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Извлечение_Р";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(248, 186);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(111, 17);
+            this.checkBox3.TabIndex = 22;
+            this.checkBox3.Text = "Встраивание_Ср";
+            this.checkBox3.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(848, 534);
+            this.ClientSize = new System.Drawing.Size(835, 533);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -344,6 +353,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.CheckBox checkBox3;
     }
 }
 
