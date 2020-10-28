@@ -144,15 +144,8 @@ namespace WindowsFormsApp1
                 }
             }
 
-            for (int i = 3; i < 40; i+=4)
-            {
-                textBox1.Text = textBox1.Text + DCT_A[i, 0] + "   ";
-            }
 
-
-
-
-            textBox1.Text = textBox1.Text + bmp.Width.ToString() + "x" + bmp.Height.ToString() + "        " + bytes.ToString() + "=" + (3* bmp.Height * bmp.Width).ToString() + "   ";
+            //textBox1.Text = textBox1.Text + bmp.Width.ToString() + "x" + bmp.Height.ToString() + "        " + bytes.ToString() + "=" + (3* bmp.Height * bmp.Width).ToString() + "   ";
             Accord.Math.CosineTransform.DCT(DCT_R); // DCT по каждому каналу 
             Accord.Math.CosineTransform.DCT(DCT_G);
             Accord.Math.CosineTransform.DCT(DCT_B);
@@ -337,15 +330,6 @@ namespace WindowsFormsApp1
                 }
             }
 
-
-
-            for (int i=0; i < 20; i++)
-            {
-                textBox1.Text = textBox1.Text + rgbValues[i] + "   ";
-            }
-
-
-
             if (checkBox2.Checked == true)
             {
 
@@ -386,11 +370,74 @@ namespace WindowsFormsApp1
                 textBox4.Text = ((numerator_R / (Math.Sqrt(W1_R) * Math.Sqrt(W2_R)) + numerator_G / (Math.Sqrt(W1_G) * Math.Sqrt(W2_G)) + numerator_B / (Math.Sqrt(W1_B) * Math.Sqrt(W2_B))) / 3.0).ToString();
                 textBox5.Text = ((numerator_R1 / (Math.Sqrt(W1_R1) * Math.Sqrt(W2_R1)) + numerator_G1 / (Math.Sqrt(W1_G1) * Math.Sqrt(W2_G1)) + numerator_B1 / (Math.Sqrt(W1_B1) * Math.Sqrt(W2_B1))) / 3.0).ToString();
             }
+            
+            if (checkBox3.Checked == true)
+            {
+                int i =0 ,j=0, j_tmp= bmp.Width- bmp.Width/4, size = 0,flag=0;
+                while (size<bmp.Width* bmp.Height-2)
+                {
+                   if ((i==0)&&(j==0))
+                    {
+                        size++;
+                        i++;
+                        flag = 0;
+                        textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+                    }
+                   while ((flag == 0)&&(i>0)&&(j< bmp.Width-1))
+                    {
+                       
+                        size++;
+                        i--;
+                        j++;
+                        textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+                    }
+                    textBox1.Text += "\r\n";
+                    if ((i==0)&&(j< bmp.Width-1)&&(flag==0))
+                    {
+                        flag = 1;
+                        j++;
+                        size++;
+                        textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+
+                    }
+                   else if((i< bmp.Height-1)&&(j==bmp.Width - 1) && (flag == 0))
+                    {
+                        flag = 1;
+                        i++;
+                        size++;
+                        textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+                    }
+                   while((flag==1)&&(i< bmp.Height - 1)&&(j>0))
+                    {                        
+                        size++;
+                        i++;
+                        j--;
+                        textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+                    }
+                    textBox1.Text += "\r\n";
+                    if ((i< bmp.Height - 1)&&(j==0)&&(flag==1))
+                    {
+                        flag = 0;
+                        i++;
+                        size++;
+                        textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+                    }
+                   else if((i== bmp.Height - 1)&&(j< bmp.Width - 1)&&(flag==1))
+                    {
+                        flag = 0;
+                        j++;
+                        size++;
+                        textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+                    }
+                    
+
+                }
+                
+            }
 
 
 
-
-                System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+            System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.Image = bmp;
             // Unlock the bits.
@@ -435,20 +482,6 @@ namespace WindowsFormsApp1
             if (ofd.ShowDialog(this) == DialogResult.OK)
                 pictureBox2.Image = Image.FromFile(ofd.FileName);
         }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
+      
     }
 }
