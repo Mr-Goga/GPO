@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Accord.Math;
+using System.Collections;
 
 namespace WindowsFormsApp1
 {
@@ -373,7 +374,10 @@ namespace WindowsFormsApp1
             
             if (checkBox3.Checked == true)
             {
-                int i =0 ,j=0, j_tmp= bmp.Width- bmp.Width/4, size = 0,flag=0;
+                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                BitArray bits = new BitArray(byteArray);
+
+                int i =0 ,j=0, size = 0,flag=0;
                 while (size<bmp.Width* bmp.Height-2)
                 {
                    if ((i==0)&&(j==0))
@@ -428,8 +432,7 @@ namespace WindowsFormsApp1
                         j++;
                         size++;
                         textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-                    }
-                    
+                    }                    
 
                 }
                 
