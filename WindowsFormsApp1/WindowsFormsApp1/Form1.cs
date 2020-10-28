@@ -383,9 +383,14 @@ namespace WindowsFormsApp1
                     byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
                     BitArray bits = new BitArray(byteArray);
                     textBox6.Text = textBox6.Text + " " + bits.Length.ToString();
-                    for (int t = 0; t < bits.Length; t++)
+                    /* for (int t = 0; t < bits.Length; t++)
+                     {
+                         textBox6.Text = textBox6.Text + " " +t+"-"+ bits[t].ToString()+"-"+ Convert.ToInt32(bits[t]);
+                     }*/
+
+                    for (int t = 0; t < byteArray.Length; t++)
                     {
-                        textBox6.Text = textBox6.Text + " " +t+"-"+ bits[t].ToString()+"-"+ Convert.ToInt32(bits[t]);
+                        textBox6.Text = textBox6.Text + " " + t + "-" + byteArray[t].ToString();
                     }
                     if ((bmp.Width * bmp.Height <= bits.Length)||(bits.Length==0))
                     {
@@ -992,12 +997,17 @@ namespace WindowsFormsApp1
 
                 }
 
-                for (int t = 0; t < bits.Length; t++)
+               /* for (int t = 0; t < bits.Length; t++)
                 {
                     textBox6.Text = textBox6.Text + " " + t + "-"  + bits[t].ToString();
-                }
+                }*/
                 byte[] bytes_exit = new byte[Convert.ToInt32(Math.Ceiling(bits.Count / 8.0))]; //Теоретически должно переводить массив бит в массив байт
                 bits.CopyTo(bytes_exit, 0);
+
+                for (int t = 0; t < bytes_exit.Length; t++)
+                {
+                    textBox6.Text = textBox6.Text + " " + t + "-" + bytes_exit[t].ToString();
+                }
                 textBox6.Text = textBox6.Text + size.ToString();
                 textBox6.Text = textBox6.Text+ System.Text.Encoding.UTF8.GetString(bytes_exit);
                
