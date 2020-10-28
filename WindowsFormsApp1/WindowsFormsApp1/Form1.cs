@@ -382,9 +382,10 @@ namespace WindowsFormsApp1
 
                     byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
                     BitArray bits = new BitArray(byteArray);
+                    textBox6.Text = textBox6.Text + " " + bits.Length.ToString();
                     for (int t = 0; t < bits.Length; t++)
                     {
-                        textBox6.Text = textBox6.Text + " " + bits[t].ToString()+"-"+ Convert.ToInt32(bits[t]);
+                        textBox6.Text = textBox6.Text + " " +t+"-"+ bits[t].ToString()+"-"+ Convert.ToInt32(bits[t]);
                     }
                     if ((bmp.Width * bmp.Height <= bits.Length)||(bits.Length==0))
                     {
@@ -409,33 +410,24 @@ namespace WindowsFormsApp1
                             i--;
                             j++;
 
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2*bmp.Width * bmp.Height / 3 ))
                             {
                                 DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * Math.Abs(Math.Floor(DCT_R[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                           
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2*bmp.Width * bmp.Height / 3))
                             {
                                 DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * Math.Abs(Math.Floor(DCT_G[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                           
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2*bmp.Width * bmp.Height / 3))
                             {
                                 DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * Math.Abs(Math.Floor(DCT_B[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
+                           
 
                             //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
                         }
@@ -446,33 +438,24 @@ namespace WindowsFormsApp1
                             j++;
                             size++;
 
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2*bmp.Width * bmp.Height / 3))
                             {
                                 DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * Math.Abs(Math.Floor(DCT_R[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                           
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2*bmp.Width * bmp.Height / 3))
                             {
                                 DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * Math.Abs(Math.Floor(DCT_G[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                            
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                             {
                                 DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * Math.Abs(Math.Floor(DCT_B[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
+                           
                             //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
 
                         }
@@ -482,33 +465,24 @@ namespace WindowsFormsApp1
                             i++;
                             size++;
 
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                             {
                                 DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * Math.Abs(Math.Floor(DCT_R[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                            
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                             {
                                 DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * Math.Abs(Math.Floor(DCT_G[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                           
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                             {
                                 DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * Math.Abs(Math.Floor(DCT_B[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
+                            
                             //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
                         }
                         while ((flag == 1) && (i < bmp.Height - 1) && (j > 0))
@@ -517,33 +491,24 @@ namespace WindowsFormsApp1
                             i++;
                             j--;
 
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                             {
                                 DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * Math.Abs(Math.Floor(DCT_R[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                           
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                             {
                                 DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * Math.Abs(Math.Floor(DCT_G[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                           
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                             {
                                 DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * Math.Abs(Math.Floor(DCT_B[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
+                            
                             //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
                         }
                         //textBox1.Text += "\r\n";
@@ -553,33 +518,24 @@ namespace WindowsFormsApp1
                             i++;
                             size++;
 
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                             {
                                 DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * Math.Abs(Math.Floor(DCT_R[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                           
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                             {
                                 DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * Math.Abs(Math.Floor(DCT_G[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                            
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                             {
                                 DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * Math.Abs(Math.Floor(DCT_B[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
+                           
                             //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
                         }
                         else if ((i == bmp.Height - 1) && (j < bmp.Width - 1) && (flag == 1))
@@ -588,37 +544,27 @@ namespace WindowsFormsApp1
                             j++;
                             size++;
 
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                             {
                                 DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * Math.Abs(Math.Floor(DCT_R[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                           
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                             {
                                 DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * Math.Abs(Math.Floor(DCT_G[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                          
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                             {
                                 DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * Math.Abs(Math.Floor(DCT_B[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
                                 count_bit++;
                             }
-                            else
-                            {
-                                flag = -1;
-                            }
+                            
                             //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
                         }
-                        if (flag == -1)
-                            break;
+                       
 
                     }
 
@@ -742,6 +688,8 @@ namespace WindowsFormsApp1
             {
                 int lenght_bitarr = Convert.ToInt32(textBox7.Text) * 8;
                 BitArray bits = new BitArray(lenght_bitarr);
+                textBox6.Text = textBox6.Text + " " + lenght_bitarr.ToString();
+             
                 int i = 0, j = 0, size = 0, flag = 0, count_bit = 0, q = 6 ;
                 //textBox1.Text = Convert.ToInt32(bits[count_bit]).ToString();
                 while (size < bmp.Width * bmp.Height - 2)
@@ -761,7 +709,7 @@ namespace WindowsFormsApp1
                         i--;
                         j++;
 
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2*bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_R[i, j]-Math.Sign(DCT_R[i, j])*q* Math.Abs(Math.Floor(DCT_R[i, j] / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q/2+q * Math.Abs(Math.Floor(DCT_R[i, j] / q)))))                            
                             {
@@ -773,11 +721,8 @@ namespace WindowsFormsApp1
                             }                           
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                      
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * Math.Abs(Math.Floor(DCT_G[i, j] / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_G[i, j] / q)))))
                             {
@@ -789,11 +734,8 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                       
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * Math.Abs(Math.Floor(DCT_B[i, j] / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_B[i, j] / q)))))
                             {
@@ -805,10 +747,7 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
+                      
 
                         //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
                     }
@@ -819,7 +758,7 @@ namespace WindowsFormsApp1
                         j++;
                         size++;
 
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * Math.Abs(Math.Floor(DCT_R[i, j] / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_R[i, j] / q)))))
                             {
@@ -831,11 +770,8 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                      
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * Math.Abs(Math.Floor(DCT_G[i, j] / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_G[i, j] / q)))))
                             {
@@ -847,11 +783,8 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                      
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * Math.Abs(Math.Floor(DCT_B[i, j] / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_B[i, j] / q)))))
                             {
@@ -863,10 +796,7 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
+                      
                         //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
 
                     }
@@ -876,7 +806,7 @@ namespace WindowsFormsApp1
                         i++;
                         size++;
 
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * Math.Abs(Math.Floor(DCT_R[i, j] / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_R[i, j] / q)))))
                             {
@@ -888,11 +818,8 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                       
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * Math.Abs(Math.Floor(DCT_G[i, j] / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_G[i, j] / q)))))
                             {
@@ -904,11 +831,8 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                       
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * Math.Abs(Math.Floor(DCT_B[i, j] / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_B[i, j] / q)))))
                             {
@@ -920,10 +844,7 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
+                      
                         //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
                     }
                     while ((flag == 1) && (i < bmp.Height - 1) && (j > 0))
@@ -932,7 +853,7 @@ namespace WindowsFormsApp1
                         i++;
                         j--;
 
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * Math.Abs(Math.Floor(DCT_R[i, j] / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_R[i, j] / q)))))
                             {
@@ -944,11 +865,8 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                       
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * Math.Abs(Math.Floor(DCT_G[i, j] / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_G[i, j] / q)))))
                             {
@@ -960,11 +878,8 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                       
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * Math.Abs(Math.Floor(DCT_B[i, j] / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_B[i, j] / q)))))
                             {
@@ -976,10 +891,7 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
+                       
                         //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
                     }
                     //textBox1.Text += "\r\n";
@@ -989,7 +901,7 @@ namespace WindowsFormsApp1
                         i++;
                         size++;
 
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * Math.Abs(Math.Floor(DCT_R[i, j] / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_R[i, j] / q)))))
                             {
@@ -1001,11 +913,8 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                       
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * Math.Abs(Math.Floor(DCT_G[i, j] / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_G[i, j] / q)))))
                             {
@@ -1017,11 +926,8 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                        
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * Math.Abs(Math.Floor(DCT_B[i, j] / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_B[i, j] / q)))))
                             {
@@ -1033,10 +939,7 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
+                       
                         //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
                     }
                     else if ((i == bmp.Height - 1) && (j < bmp.Width - 1) && (flag == 1))
@@ -1045,7 +948,7 @@ namespace WindowsFormsApp1
                         j++;
                         size++;
 
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * Math.Abs(Math.Floor(DCT_R[i, j] / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_R[i, j] / q)))))
                             {
@@ -1057,11 +960,8 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                        
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * Math.Abs(Math.Floor(DCT_G[i, j] / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_G[i, j] / q)))))
                             {
@@ -1073,11 +973,8 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
-                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < bmp.Width * bmp.Height / 3 * 2))
+                      
+                        if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
                         {
                             if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * Math.Abs(Math.Floor(DCT_B[i, j] / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * Math.Abs(Math.Floor(DCT_B[i, j] / q)))))
                             {
@@ -1089,25 +986,21 @@ namespace WindowsFormsApp1
                             }
                             count_bit++;
                         }
-                        else
-                        {
-                            flag = -1;
-                        }
+                      
                         //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-                    }
-                    if (flag == -1)
-                        break;
+                    }                   
 
                 }
 
-
+                for (int t = 0; t < bits.Length; t++)
+                {
+                    textBox6.Text = textBox6.Text + " " + t + "-"  + bits[t].ToString();
+                }
                 byte[] bytes_exit = new byte[Convert.ToInt32(Math.Ceiling(bits.Count / 8.0))]; //Теоретически должно переводить массив бит в массив байт
                 bits.CopyTo(bytes_exit, 0);
-                textBox6.Text = Encoding.UTF8.GetString(bytes_exit).ToString();
-                for(int t=0;t< bits.Length; t++)
-                {
-                    textBox6.Text = textBox6.Text + " " + bits[t].ToString();
-                }
+                textBox6.Text = textBox6.Text + size.ToString();
+                textBox6.Text = textBox6.Text+ System.Text.Encoding.UTF8.GetString(bytes_exit);
+               
             }
             catch (Exception ex)
             {
