@@ -260,7 +260,455 @@ namespace WindowsFormsApp1
                 textBox3.Text = ((numerator_R1 / (Math.Sqrt(W1_R1) * Math.Sqrt(W2_R1)) + numerator_G1 / (Math.Sqrt(W1_G1) * Math.Sqrt(W2_G1)) + numerator_B1 / (Math.Sqrt(W1_B1) * Math.Sqrt(W2_B1))) / 3.0).ToString();
             }
 
+            if (checkBox3.Checked == true)
+            {
+                try
+                {
 
+
+                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                    BitArray bits = new BitArray(byteArray);
+                    textBox6.Text = textBox6.Text + " " + bits.Length.ToString();
+                    /* for (int t = 0; t < bits.Length; t++)
+                     {
+                         textBox6.Text = textBox6.Text + " " +t+"-"+ bits[t].ToString()+"-"+ Convert.ToInt32(bits[t]);
+                     }*/
+
+                   // for (int t = 0; t < byteArray.Length; t++)
+                   // {
+                   //     textBox6.Text = textBox6.Text + " " + t + "-" + byteArray[t].ToString();
+                   // }
+                    for (int t = 0; t < bits.Length; t++)
+                    {
+                        textBox6.Text = textBox6.Text + " " + t + "-" + Convert.ToInt32(bits[t]).ToString();
+                    }
+                    textBox6.Text = textBox6.Text + "------";
+                    if ((bmp.Width * bmp.Height <= bits.Length) || (bits.Length == 0))
+                    {
+                        throw new Exception("Ошибка");
+                    }
+                    int i = 0, j = 0, size = 0, flag = 0, count_bit = 0, q = 6;
+                    //textBox1.Text = Convert.ToInt32(bits[count_bit]).ToString();
+                    BitArray bits_debug = new BitArray(byteArray);
+                    while (size < bmp.Width * bmp.Height - 2)
+                    {
+                        if ((i == 0) && (j == 0))
+                        {
+                            size++;
+                            i++;
+                            flag = 0;
+
+                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+                        }
+                        while ((flag == 0) && (i > 0) && (j < bmp.Width - 1))
+                        {
+
+                            size++;
+                            i--;
+                            j++;
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_R[i, j]).ToString();
+                                DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q *(Math.Floor(Math.Abs(DCT_R[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_R[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_G[i, j]).ToString();
+                                DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q *(Math.Floor(Math.Abs(DCT_G[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_G[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_B[i, j]).ToString();
+                                DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_B[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+
+                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+                        }
+                        //textBox1.Text += "\r\n";
+                        if ((i == 0) && (j < bmp.Width - 1) && (flag == 0))
+                        {
+                            flag = 1;
+                            j++;
+                            size++;
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_R[i, j]).ToString();
+                                DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_R[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_G[i, j]).ToString();
+                                DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q *(Math.Floor(Math.Abs(DCT_G[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_G[i, j]).ToString();
+                                count_bit++;
+                                // count_bit++;
+                            }
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_B[i, j]).ToString();
+                                DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_B[i, j]).ToString();
+                                count_bit++;
+                                // count_bit++;
+                            }
+
+                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+
+                        }
+                        else if ((i < bmp.Height - 1) && (j == bmp.Width - 1) && (flag == 0))
+                        {
+                            flag = 1;
+                            i++;
+                            size++;
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_R[i, j]).ToString();
+                                DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_R[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_G[i, j]).ToString();
+                                DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q *(Math.Floor(Math.Abs(DCT_G[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_G[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_B[i, j]).ToString();
+                                DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_B[i, j]).ToString();
+                                count_bit++;
+                                // count_bit++;
+                            }
+
+                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+                        }
+                        while ((flag == 1) && (i < bmp.Height - 1) && (j > 0))
+                        {
+                            size++;
+                            i++;
+                            j--;
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_R[i, j]).ToString();
+                                DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_R[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_G[i, j]).ToString();
+                                DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q)) + (q / 2) * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_G[i, j] )/ q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_G[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_B[i, j]).ToString();
+                                DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q *(Math.Floor(Math.Abs(DCT_B[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                               
+                                if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q *(Math.Floor(Math.Abs(DCT_B[i, j]) / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q *(Math.Floor(Math.Abs(DCT_B[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_B[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+                        }
+                        //textBox1.Text += "\r\n";
+                        if ((i < bmp.Height - 1) && (j == 0) && (flag == 1))
+                        {
+                            flag = 0;
+                            i++;
+                            size++;
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_R[i, j]).ToString();
+                                DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * (Math.Floor(Math.Abs(DCT_R[i, j] )/ q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_R[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_G[i, j]).ToString();
+                                DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                               
+                                if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_G[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_B[i, j]).ToString();
+                                DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * (Math.Floor(Math.Abs(DCT_B[i, j] )/ q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                             
+                                if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_B[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+                        }
+                        else if ((i == bmp.Height - 1) && (j < bmp.Width - 1) && (flag == 1))
+                        {
+                            flag = 0;
+                            j++;
+                            size++;
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_R[i, j]).ToString();
+                                DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q *(Math.Floor(Math.Abs(DCT_R[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_R[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_G[i, j]).ToString();
+                                DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q *(Math.Floor(Math.Abs(DCT_G[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_G[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
+                            {
+                                textBox6.Text = textBox6.Text + "penis->" + (DCT_B[i, j]).ToString();
+                                DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
+                                
+                                if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)))))
+                                {
+                                    bits_debug[count_bit] = true;
+                                }
+                                else
+                                {
+                                    bits_debug[count_bit] = false;
+                                }
+                                textBox6.Text = textBox6.Text + "pipiska->" + (DCT_B[i, j]).ToString();
+                                count_bit++;
+                                //count_bit++;
+                            }
+
+                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
+                        }
+
+
+                    }
+
+                    textBox1.Text = textBox1.Text + "   Байтового массива равен " + byteArray.Length.ToString();
+                    byte[] bytes_debug = new byte[Convert.ToInt32(Math.Ceiling(bits_debug.Count / 8.0))];
+                    bits_debug.CopyTo(bytes_debug, 0);
+                    // for (int t = 0; t < bytes_debug.Length; t++)
+                    //{
+                    //    textBox6.Text = textBox6.Text + " " + t + "-" + bytes_debug[t].ToString();
+                    // }
+                    for (int t = 0; t < bits.Length; t++)
+                    {
+                        textBox6.Text = textBox6.Text + " " + t + "-" + Convert.ToInt32(bits_debug[t]).ToString();
+                    }
+                    int kolvo_oshibok = 0;
+                    for (int t = 0; t < bits.Length; t++)
+                    {
+                        if (bits[t] != bits_debug[t])
+                            kolvo_oshibok++;
+
+                    }
+                    textBox6.Text = textBox6.Text + "Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                    textBox6.Text = textBox6.Text + "Сообщение -> " + System.Text.Encoding.UTF8.GetString(bytes_debug);
+                    
+                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
 
             // Accord.Math.CosineTransform.IDCT(DCT_R); // IDCT по каждому каналу 
             //Accord.Math.CosineTransform.IDCT(DCT_G);
@@ -374,213 +822,7 @@ namespace WindowsFormsApp1
                 textBox5.Text = ((numerator_R1 / (Math.Sqrt(W1_R1) * Math.Sqrt(W2_R1)) + numerator_G1 / (Math.Sqrt(W1_G1) * Math.Sqrt(W2_G1)) + numerator_B1 / (Math.Sqrt(W1_B1) * Math.Sqrt(W2_B1))) / 3.0).ToString();
             }
             
-            if (checkBox3.Checked == true)
-            {
-                try
-                {
-
-
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
-                    BitArray bits = new BitArray(byteArray);
-                    textBox6.Text = textBox6.Text + " " + bits.Length.ToString();
-                    /* for (int t = 0; t < bits.Length; t++)
-                     {
-                         textBox6.Text = textBox6.Text + " " +t+"-"+ bits[t].ToString()+"-"+ Convert.ToInt32(bits[t]);
-                     }*/
-
-                    for (int t = 0; t < byteArray.Length; t++)
-                    {
-                        textBox6.Text = textBox6.Text + " " + t + "-" + byteArray[t].ToString();
-                    }
-                    if ((bmp.Width * bmp.Height <= bits.Length)||(bits.Length==0))
-                    {
-                        throw new Exception("Ошибка");
-                    }
-                    int i = 0, j = 0, size = 0, flag = 0, count_bit = 0, q = 6;
-                    //textBox1.Text = Convert.ToInt32(bits[count_bit]).ToString();
-                    while (size < bmp.Width * bmp.Height - 2)
-                    {
-                        if ((i == 0) && (j == 0))
-                        {
-                            size++;
-                            i++;
-                            flag = 0;
-
-                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-                        }
-                        while ((flag == 0) && (i > 0) && (j < bmp.Width - 1))
-                        {
-
-                            size++;
-                            i--;
-                            j++;
-
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2*bmp.Width * bmp.Height / 3 ))
-                            {
-                                DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * Math.Abs(Math.Floor(DCT_R[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                           
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2*bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * Math.Abs(Math.Floor(DCT_G[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                           
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2*bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * Math.Abs(Math.Floor(DCT_B[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                           
-
-                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-                        }
-                        //textBox1.Text += "\r\n";
-                        if ((i == 0) && (j < bmp.Width - 1) && (flag == 0))
-                        {
-                            flag = 1;
-                            j++;
-                            size++;
-
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2*bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * Math.Abs(Math.Floor(DCT_R[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                           
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2*bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * Math.Abs(Math.Floor(DCT_G[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                            
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * Math.Abs(Math.Floor(DCT_B[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                           
-                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-
-                        }
-                        else if ((i < bmp.Height - 1) && (j == bmp.Width - 1) && (flag == 0))
-                        {
-                            flag = 1;
-                            i++;
-                            size++;
-
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * Math.Abs(Math.Floor(DCT_R[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                            
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * Math.Abs(Math.Floor(DCT_G[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                           
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * Math.Abs(Math.Floor(DCT_B[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                            
-                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-                        }
-                        while ((flag == 1) && (i < bmp.Height - 1) && (j > 0))
-                        {
-                            size++;
-                            i++;
-                            j--;
-
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * Math.Abs(Math.Floor(DCT_R[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                           
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * Math.Abs(Math.Floor(DCT_G[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                           
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * Math.Abs(Math.Floor(DCT_B[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                            
-                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-                        }
-                        //textBox1.Text += "\r\n";
-                        if ((i < bmp.Height - 1) && (j == 0) && (flag == 1))
-                        {
-                            flag = 0;
-                            i++;
-                            size++;
-
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * Math.Abs(Math.Floor(DCT_R[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                           
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * Math.Abs(Math.Floor(DCT_G[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                            
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * Math.Abs(Math.Floor(DCT_B[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                           
-                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-                        }
-                        else if ((i == bmp.Height - 1) && (j < bmp.Width - 1) && (flag == 1))
-                        {
-                            flag = 0;
-                            j++;
-                            size++;
-
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_R[i, j] = Math.Sign(DCT_R[i, j]) * (q * Math.Abs(Math.Floor(DCT_R[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                           
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_G[i, j] = Math.Sign(DCT_G[i, j]) * (q * Math.Abs(Math.Floor(DCT_G[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                          
-                            if ((count_bit < bits.Length - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-                            {
-                                DCT_B[i, j] = Math.Sign(DCT_B[i, j]) * (q * Math.Abs(Math.Floor(DCT_B[i, j] / q)) + q / 2 * Convert.ToInt32(bits[count_bit]));
-                                count_bit++;
-                            }
-                            
-                            //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-                        }
-                       
-
-                    }
-
-                    textBox1.Text = textBox1.Text + "   Байтового массива равен " + byteArray.Length.ToString();
-
-                } 
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
+            
 
 
 
