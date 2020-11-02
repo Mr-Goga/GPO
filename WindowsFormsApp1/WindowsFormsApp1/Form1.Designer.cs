@@ -53,13 +53,18 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.button_back = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.button_back = new System.Windows.Forms.Button();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.checkBox8 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -256,6 +261,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.checkBox7);
+            this.tabPage1.Controls.Add(this.checkBox4);
             this.tabPage1.Controls.Add(this.checkBox3);
             this.tabPage1.Controls.Add(this.pictureBox2);
             this.tabPage1.Controls.Add(this.checkBox2);
@@ -297,6 +304,9 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.checkBox8);
+            this.tabPage2.Controls.Add(this.checkBox6);
+            this.tabPage2.Controls.Add(this.checkBox5);
             this.tabPage2.Controls.Add(this.textBox7);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.textBox6);
@@ -311,15 +321,39 @@
             this.tabPage2.Text = "Извлечение_Е";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
+            // textBox7
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(816, 493);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Извлечение_Р";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.textBox7.Location = new System.Drawing.Point(193, 122);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(100, 20);
+            this.textBox7.TabIndex = 8;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(190, 105);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(92, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Размер в байтах";
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(366, 15);
+            this.textBox6.Multiline = true;
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(366, 234);
+            this.textBox6.TabIndex = 6;
+            // 
+            // button_back
+            // 
+            this.button_back.Location = new System.Drawing.Point(225, 62);
+            this.button_back.Name = "button_back";
+            this.button_back.Size = new System.Drawing.Size(102, 23);
+            this.button_back.TabIndex = 5;
+            this.button_back.Text = "Извлечение";
+            this.button_back.UseVisualStyleBackColor = true;
+            this.button_back.Click += new System.EventHandler(this.button_back_Click);
             // 
             // button1
             // 
@@ -339,39 +373,65 @@
             this.pictureBox4.TabIndex = 4;
             this.pictureBox4.TabStop = false;
             // 
-            // button_back
+            // tabPage3
             // 
-            this.button_back.Location = new System.Drawing.Point(225, 62);
-            this.button_back.Name = "button_back";
-            this.button_back.Size = new System.Drawing.Size(102, 23);
-            this.button_back.TabIndex = 5;
-            this.button_back.Text = "Извлечение";
-            this.button_back.UseVisualStyleBackColor = true;
-            this.button_back.Click += new System.EventHandler(this.button_back_Click);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(816, 493);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Извлечение_Р";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // textBox6
+            // checkBox4
             // 
-            this.textBox6.Location = new System.Drawing.Point(366, 15);
-            this.textBox6.Multiline = true;
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(366, 234);
-            this.textBox6.TabIndex = 6;
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(248, 209);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(119, 17);
+            this.checkBox4.TabIndex = 23;
+            this.checkBox4.Text = "Встраивание_Выс";
+            this.checkBox4.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // checkBox5
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(190, 105);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(92, 13);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Размер в байтах";
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(193, 148);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(106, 17);
+            this.checkBox5.TabIndex = 24;
+            this.checkBox5.Text = "Извлечение_Ср";
+            this.checkBox5.UseVisualStyleBackColor = true;
             // 
-            // textBox7
+            // checkBox6
             // 
-            this.textBox7.Location = new System.Drawing.Point(193, 122);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 20);
-            this.textBox7.TabIndex = 8;
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Location = new System.Drawing.Point(193, 171);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(114, 17);
+            this.checkBox6.TabIndex = 25;
+            this.checkBox6.Text = "Извлечение_Выс";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // checkBox7
+            // 
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Location = new System.Drawing.Point(248, 232);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(118, 17);
+            this.checkBox7.TabIndex = 24;
+            this.checkBox7.Text = "Встраивание_Низ";
+            this.checkBox7.UseVisualStyleBackColor = true;
+            // 
+            // checkBox8
+            // 
+            this.checkBox8.AutoSize = true;
+            this.checkBox8.Location = new System.Drawing.Point(193, 194);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Size = new System.Drawing.Size(113, 17);
+            this.checkBox8.TabIndex = 26;
+            this.checkBox8.Text = "Извлечение_Низ";
+            this.checkBox8.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -429,6 +489,11 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.CheckBox checkBox8;
     }
 }
 
