@@ -178,7 +178,7 @@ namespace WindowsFormsApp1
             DCT_R1.CopyTo(DCT_R_tmp1);
             DCT_G1.CopyTo(DCT_G_tmp1);
             DCT_B1.CopyTo(DCT_B_tmp1);
-            DCT_R1.CopyTo(DCT_R_tmp1);
+            DCT_A1.CopyTo(DCT_A_tmp1);
 
             // Фильтр Гаусса
             double frequencyGaus = Convert.ToDouble(textBox_frequencyGaus1.Text);
@@ -258,6 +258,83 @@ namespace WindowsFormsApp1
                 }
                 textBox2.Text = ((numerator_R / (Math.Sqrt(W1_R) * Math.Sqrt(W2_R)) + numerator_G / (Math.Sqrt(W1_G) * Math.Sqrt(W2_G)) + numerator_B / (Math.Sqrt(W1_B) * Math.Sqrt(W2_B))) / 3.0).ToString();
                 textBox3.Text = ((numerator_R1 / (Math.Sqrt(W1_R1) * Math.Sqrt(W2_R1)) + numerator_G1 / (Math.Sqrt(W1_G1) * Math.Sqrt(W2_G1)) + numerator_B1 / (Math.Sqrt(W1_B1) * Math.Sqrt(W2_B1))) / 3.0).ToString();
+            }
+
+            //Копирование исходного изображения для PSNR 
+            byte[] rgbValues_PSNR = new byte[bytes1];
+            if (checkBox9.Checked==true)
+            {
+                DCT_R.CopyTo(DCT_R_tmp1);
+                DCT_G.CopyTo(DCT_G_tmp1);
+                DCT_B.CopyTo(DCT_B_tmp1);
+                //DCT_A.CopyTo(DCT_A_tmp1);
+                IDCT_test(DCT_R_tmp1); // IDCT по каждому каналу 
+                IDCT_test(DCT_G_tmp1);
+                IDCT_test(DCT_B_tmp1);
+                //IDCT_test(DCT_A);
+                k = 0;
+                for (int i = 0; i < bmp.Height; i++) //Перезаполнение байтового массива для вывода картинки
+                {
+                    for (int j = 0; j < bmp.Width; j++)
+                    {
+                        if (DCT_R_tmp1[i, j] <= 0)
+                        {
+                            rgbValues_PSNR[k] = 0;
+                        }
+                        else if ((DCT_R_tmp1[i, j] >= 255))
+                        {
+                            rgbValues_PSNR[k] = 255;
+                        }
+                        else
+                        {
+                            rgbValues_PSNR[k] = Convert.ToByte(DCT_R_tmp1[i, j]);
+                        }
+
+                        if (DCT_G_tmp1[i, j] <= 0)
+                        {
+                            rgbValues_PSNR[k + 1] = 0;
+                        }
+                        else if ((DCT_G_tmp1[i, j] >= 255))
+                        {
+                            rgbValues_PSNR[k + 1] = 255;
+                        }
+                        else
+                        {
+                            rgbValues_PSNR[k + 1] = Convert.ToByte(DCT_G_tmp1[i, j]);
+                        }
+
+                        if (DCT_B_tmp1[i, j] <= 0)
+                        {
+                            rgbValues_PSNR[k + 2] = 0;
+                        }
+                        else if ((DCT_B_tmp1[i, j] >= 255))
+                        {
+                            rgbValues_PSNR[k + 2] = 255;
+                        }
+                        else
+                        {
+                            rgbValues_PSNR[k + 2] = Convert.ToByte(DCT_B_tmp1[i, j]);
+                        }
+
+
+                        if (DCT_A_tmp1[i, j] <= 0)
+                        {
+                            rgbValues_PSNR[k + 3] = 0;
+                        }
+                        else if ((DCT_A_tmp1[i, j] >= 255))
+                        {
+                            rgbValues_PSNR[k + 3] = 255;
+                        }
+                        else
+                        {
+                            rgbValues_PSNR[k + 3] = Convert.ToByte(DCT_A_tmp1[i, j]);
+                        }
+
+                        k += 4;
+                    }
+                }
+
+
             }
             //Встраивание в средних частотах
             if (checkBox3.Checked == true)
@@ -1679,7 +1756,7 @@ namespace WindowsFormsApp1
                     k += 4;
                 }
             }
-
+            // расчет корреляции
             if (checkBox2.Checked == true)
             {
 
@@ -1722,7 +1799,27 @@ namespace WindowsFormsApp1
             }
 
 
+            //Копирование исходного изображения для PSNR            
+            if (checkBox9.Checked == true)
+            {
+                
+                    double psnr = 0;
+                    double MSE = 0;
+                    for (int i = 0; i < bytes1; i+=4)
+                    {
 
+                        MSE = MSE + (rgbValues_PSNR[i] - rgbValues[i]) * (rgbValues_PSNR[i] - rgbValues[i]);
+                    MSE = MSE + (rgbValues_PSNR[i+1] - rgbValues[i+1]) * (rgbValues_PSNR[i+1] - rgbValues[i+1]);
+                    MSE = MSE + (rgbValues_PSNR[i+2] - rgbValues[i+2]) * (rgbValues_PSNR[i+2] - rgbValues[i+2]);
+                    
+                }
+                    
+                MSE = MSE / ((double)bmp.Width * (double)bmp.Height * 3.0d);                    
+                psnr = 10 * Math.Log(10, 255.0d * 255.0d / MSE);
+
+                label4.Text = psnr.ToString();                
+
+            }
 
 
             System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
@@ -1779,401 +1876,6 @@ namespace WindowsFormsApp1
                 pictureBox4.Image = Image.FromFile(ofd.FileName);
 
         }
-
-        //private void button_back_Click(object sender, EventArgs e)
-        //{
-        //    Bitmap bmp = new Bitmap(pictureBox3.Image);
-
-        //    // Lock the bitmap's bits.  
-        //    Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-        //    System.Drawing.Imaging.BitmapData bmpData =
-        //        bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-        //        bmp.PixelFormat);
-
-
-        //    // Get the address of the first line.
-        //    IntPtr ptr = bmpData.Scan0;
-
-        //    // Declare an array to hold the bytes of the bitmap.
-        //    int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
-        //    byte[] rgbValues = new byte[bytes];         
-
-
-        //    // Copy the RGB values into the array.
-        //    //System.Runtime.InteropServices.Marshal.Copy(ptr, DCT1, 0, bytes);
-        //    System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);          
-
-
-        //    double[,] DCT_R = new double[bmp.Height, bmp.Width]; //Массивы для частот каналов
-        //    double[,] DCT_G = new double[bmp.Height, bmp.Width];
-        //    double[,] DCT_B = new double[bmp.Height, bmp.Width];
-        //    double[,] DCT_A = new double[bmp.Height, bmp.Width];     
-
-        //    int k = 0;
-        //    for (int i = 0; i < bmp.Height; i++) //Заполнение матриц каналов
-        //    {
-        //        for (int j = 0; j < bmp.Width; j++)
-        //        {
-        //            DCT_R[i, j] = Convert.ToDouble(rgbValues[k]);
-        //            DCT_G[i, j] = Convert.ToDouble(rgbValues[k + 1]);
-        //            DCT_B[i, j] = Convert.ToDouble(rgbValues[k + 2]);
-        //            DCT_A[i, j] = Convert.ToDouble(rgbValues[k + 3]);
-
-        //            k += 4;
-        //        }
-        //    }
-
-
-        //    //textBox1.Text = textBox1.Text + bmp.Width.ToString() + "x" + bmp.Height.ToString() + "        " + bytes.ToString() + "=" + (3* bmp.Height * bmp.Width).ToString() + "   ";
-        //    Accord.Math.CosineTransform.DCT(DCT_R); // DCT по каждому каналу 
-        //    Accord.Math.CosineTransform.DCT(DCT_G);
-        //    Accord.Math.CosineTransform.DCT(DCT_B);
-        //    //Accord.Math.CosineTransform.DCT(DCT_A);// Альфа канал под вопросом
-
-        //    try
-        //    {
-        //        int lenght_bitarr = Convert.ToInt32(textBox7.Text) * 8;
-        //        BitArray bits = new BitArray(lenght_bitarr);
-        //        textBox6.Text = textBox6.Text + " " + lenght_bitarr.ToString();
-
-        //        int i = 0, j = 0, size = 0, flag = 0, count_bit = 0, q = 6 ;
-        //        //textBox1.Text = Convert.ToInt32(bits[count_bit]).ToString();
-        //        while (size < bmp.Width * bmp.Height - 2)
-        //        {
-        //            if ((i == 0) && (j == 0))
-        //            {
-        //                size++;
-        //                i++;
-        //                flag = 0;
-
-        //                //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-        //            }
-        //            while ((flag == 0) && (i > 0) && (j < bmp.Width - 1))
-        //            {
-
-        //                size++;
-        //                i--;
-        //                j++;
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2*bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }                                                     
-        //                    count_bit++;
-        //                }
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-
-        //                //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-        //            }
-        //            //textBox1.Text += "\r\n";
-        //            if ((i == 0) && (j < bmp.Width - 1) && (flag == 0))
-        //            {
-        //                flag = 1;
-        //                j++;
-        //                size++;
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-
-        //            }
-        //            else if ((i < bmp.Height - 1) && (j == bmp.Width - 1) && (flag == 0))
-        //            {
-        //                flag = 1;
-        //                i++;
-        //                size++;
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-        //            }
-        //            while ((flag == 1) && (i < bmp.Height - 1) && (j > 0))
-        //            {
-        //                size++;
-        //                i++;
-        //                j--;
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-        //            }
-        //            //textBox1.Text += "\r\n";
-        //            if ((i < bmp.Height - 1) && (j == 0) && (flag == 1))
-        //            {
-        //                flag = 0;
-        //                i++;
-        //                size++;
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-        //            }
-        //            else if ((i == bmp.Height - 1) && (j < bmp.Width - 1) && (flag == 1))
-        //            {
-        //                flag = 0;
-        //                j++;
-        //                size++;
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q))) > Math.Abs(DCT_R[i, j] - Math.Sign(DCT_R[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_R[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q))) > Math.Abs(DCT_G[i, j] - Math.Sign(DCT_G[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_G[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                if ((count_bit < lenght_bitarr - 1) && (bmp.Width * bmp.Height / 3 < size) && (size < 2 * bmp.Width * bmp.Height / 3))
-        //                {
-        //                    if (Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q))) > Math.Abs(DCT_B[i, j] - Math.Sign(DCT_B[i, j]) * (q / 2 + q * (Math.Floor(Math.Abs(DCT_B[i, j]) / q)))))
-        //                    {
-        //                        bits[count_bit] = true;
-        //                    }
-        //                    else
-        //                    {
-        //                        bits[count_bit] = false;
-        //                    }
-        //                    count_bit++;
-        //                }
-
-        //                //textBox1.Text = textBox1.Text + " " + size + "-[" + i + "][" + j + "]";
-        //            }                   
-
-        //        }
-
-        //       /* for (int t = 0; t < bits.Length; t++)
-        //        {
-        //            textBox6.Text = textBox6.Text + " " + t + "-"  + bits[t].ToString();
-        //        }*/
-        //        byte[] bytes_exit = new byte[Convert.ToInt32(Math.Ceiling(bits.Count / 8.0))]; //Теоретически должно переводить массив бит в массив байт
-        //        bits.CopyTo(bytes_exit, 0);
-
-        //        for (int t = 0; t < bytes_exit.Length; t++)
-        //        {
-        //            textBox6.Text = textBox6.Text + " " + t + "-" + bytes_exit[t].ToString();
-        //        }
-        //        textBox6.Text = textBox6.Text + size.ToString();
-        //        textBox6.Text = textBox6.Text+ System.Text.Encoding.UTF8.GetString(bytes_exit);
-
-
-        //        byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
-        //        BitArray bits_debug = new BitArray(byteArray);
-        //        int kolvo_oshibok = 0;
-        //        for (int t = 0; t < bits.Length; t++)
-        //        {
-        //            if (bits[t] != bits_debug[t])
-        //                kolvo_oshibok++;
-
-        //        }
-        //        textBox6.Text = textBox6.Text + "Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //    }
-
-
-
-
-        //}
 
         private void button_back_Click(object sender, EventArgs e)
         {
@@ -3252,6 +2954,11 @@ namespace WindowsFormsApp1
             }
 
 
+
+        }
+
+        private void checkBox9_CheckedChanged(object sender, EventArgs e)
+        {
 
         }
     }
