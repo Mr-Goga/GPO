@@ -1799,24 +1799,28 @@ namespace WindowsFormsApp1
             }
 
 
-            //Копирование исходного изображения для PSNR            
+            //Его величество PSNR            
             if (checkBox9.Checked == true)
             {
                 
-                    double psnr = 0;
-                    double MSE = 0;
+                    double psnr = 0, psnr1 = 0, psnr2 = 0;
+                    double MSE = 0, MSE1 = 0, MSE2 = 0;
                     for (int i = 0; i < bytes1; i+=4)
                     {
 
-                        MSE = MSE + (rgbValues_PSNR[i] - rgbValues[i]) * (rgbValues_PSNR[i] - rgbValues[i]);
-                    MSE = MSE + (rgbValues_PSNR[i+1] - rgbValues[i+1]) * (rgbValues_PSNR[i+1] - rgbValues[i+1]);
-                    MSE = MSE + (rgbValues_PSNR[i+2] - rgbValues[i+2]) * (rgbValues_PSNR[i+2] - rgbValues[i+2]);
+                    MSE = MSE + (rgbValues_PSNR[i] - rgbValues[i]) * (rgbValues_PSNR[i] - rgbValues[i]);
+                    MSE1 = MSE1 + (rgbValues_PSNR[i+1] - rgbValues[i+1]) * (rgbValues_PSNR[i+1] - rgbValues[i+1]);
+                    MSE2 = MSE2 + (rgbValues_PSNR[i+2] - rgbValues[i+2]) * (rgbValues_PSNR[i+2] - rgbValues[i+2]);
                     
                 }
                     
-                MSE = MSE / ((double)bmp.Width * (double)bmp.Height * 3.0d);                    
+                MSE = MSE / ((double)bmp.Width * (double)bmp.Height );
+                MSE1 = MSE1 / ((double)bmp.Width * (double)bmp.Height);
+                MSE2 = MSE2 / ((double)bmp.Width * (double)bmp.Height);
                 psnr = 10 * Math.Log(10, 255.0d * 255.0d / MSE);
-
+                psnr1 = 10 * Math.Log(10, 255.0d * 255.0d / MSE1);
+                psnr2 = 10 * Math.Log(10, 255.0d * 255.0d / MSE2);
+                psnr = (psnr + psnr1 + psnr2) / 3.0;
                 label4.Text = psnr.ToString();                
 
             }
