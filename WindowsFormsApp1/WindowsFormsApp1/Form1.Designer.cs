@@ -51,6 +51,8 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
+            this.checkBox9 = new System.Windows.Forms.CheckBox();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
@@ -65,8 +67,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.checkBox9 = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.button_openfile = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -263,6 +265,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label7);
+            this.tabPage1.Controls.Add(this.button_openfile);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.checkBox9);
             this.tabPage1.Controls.Add(this.checkBox7);
@@ -295,6 +299,26 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Встраивание";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(582, 143);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "label4";
+            // 
+            // checkBox9
+            // 
+            this.checkBox9.AutoSize = true;
+            this.checkBox9.Location = new System.Drawing.Point(248, 252);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Size = new System.Drawing.Size(56, 17);
+            this.checkBox9.TabIndex = 25;
+            this.checkBox9.Text = "PSNR";
+            this.checkBox9.UseVisualStyleBackColor = true;
+            this.checkBox9.CheckedChanged += new System.EventHandler(this.checkBox9_CheckedChanged);
             // 
             // checkBox7
             // 
@@ -437,25 +461,23 @@
             this.tabPage3.Text = "Извлечение_Р";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // checkBox9
+            // label7
             // 
-            this.checkBox9.AutoSize = true;
-            this.checkBox9.Location = new System.Drawing.Point(248, 252);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Size = new System.Drawing.Size(56, 17);
-            this.checkBox9.TabIndex = 25;
-            this.checkBox9.Text = "PSNR";
-            this.checkBox9.UseVisualStyleBackColor = true;
-            this.checkBox9.CheckedChanged += new System.EventHandler(this.checkBox9_CheckedChanged);
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(254, 449);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(0, 13);
+            this.label7.TabIndex = 28;
             // 
-            // label4
+            // button_openfile
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(582, 143);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 26;
-            this.label4.Text = "label4";
+            this.button_openfile.Location = new System.Drawing.Point(248, 416);
+            this.button_openfile.Name = "button_openfile";
+            this.button_openfile.Size = new System.Drawing.Size(75, 23);
+            this.button_openfile.TabIndex = 27;
+            this.button_openfile.Text = "Open File";
+            this.button_openfile.UseVisualStyleBackColor = true;
+            this.button_openfile.Click += new System.EventHandler(this.button_openfile_Click);
             // 
             // Form1
             // 
@@ -520,6 +542,8 @@
         private System.Windows.Forms.CheckBox checkBox8;
         private System.Windows.Forms.CheckBox checkBox9;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button button_openfile;
     }
 }
 

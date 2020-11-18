@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Accord.Math;
 using System.Collections;
+using System.IO;
 
 namespace WindowsFormsApp1
 {
@@ -341,9 +342,16 @@ namespace WindowsFormsApp1
             {
                 try
                 {
-
-
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                    byte[] byteArray;
+                    if (label7.Text!="") //Если открыт файл, то записывается файл, иначе текст их текстбокса 
+                    {
+                        byteArray = File.ReadAllBytes(label7.Text);
+                    }
+                    else
+                    {
+                        byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                    }
+                    
                     BitArray bits = new BitArray(byteArray);
                     textBox6.Text = textBox6.Text + " " + bits.Length.ToString();
                     /* for (int t = 0; t < bits.Length; t++)
@@ -793,7 +801,15 @@ namespace WindowsFormsApp1
                 {
 
 
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                    byte[] byteArray;
+                    if (label7.Text != "") //Если открыт файл, то записывается файл, иначе текст их текстбокса 
+                    {
+                        byteArray = File.ReadAllBytes(label7.Text);
+                    }
+                    else
+                    {
+                        byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                    }
                     BitArray bits = new BitArray(byteArray);
                     textBox6.Text = textBox6.Text + " " + bits.Length.ToString();
                     /* for (int t = 0; t < bits.Length; t++)
@@ -1243,7 +1259,15 @@ namespace WindowsFormsApp1
                 {
 
 
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                    byte[] byteArray;
+                    if (label7.Text != "") //Если открыт файл, то записывается файл, иначе текст их текстбокса 
+                    {
+                        byteArray = File.ReadAllBytes(label7.Text);
+                    }
+                    else
+                    {
+                        byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                    }
                     BitArray bits = new BitArray(byteArray);
                     textBox6.Text = textBox6.Text + " " + bits.Length.ToString();
                     /* for (int t = 0; t < bits.Length; t++)
@@ -2248,23 +2272,38 @@ namespace WindowsFormsApp1
                 byte[] bytes_exit = new byte[Convert.ToInt32(Math.Ceiling(bits.Count / 8.0))]; //Теоретически должно переводить массив бит в массив байт
                 bits.CopyTo(bytes_exit, 0);
 
-                //for (int t = 0; t < bytes_exit.Length; t++)
-                //{
-                //    textBox6.Text = textBox6.Text + " " + t + "-" + bytes_exit[t].ToString();
-                //}
-                //textBox6.Text = textBox6.Text + size.ToString();
-                textBox6.Text = textBox6.Text + System.Text.Encoding.UTF8.GetString(bytes_exit);
+                    
+                    if (label7.Text != "") //Если открыт файл, то вытягивается файл, иначе вытягивается текст и заносится в текстбокса 
+                    {
+                        File.WriteAllBytes("C:\\Users\\Public\\Documents\\Выход.txt", bytes_exit);
+                        byte[] byteArray = byteArray = File.ReadAllBytes(label7.Text);
+                        BitArray bits_debug = new BitArray(byteArray);
+                        int kolvo_oshibok = 0;
+                        for (int t = 0; t < bits.Length; t++)
+                        {
+                            if (bits[t] != bits_debug[t])
+                                kolvo_oshibok++;
 
-                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
-                BitArray bits_debug = new BitArray(byteArray);
-                int kolvo_oshibok = 0;
-                for (int t = 0; t < bits.Length; t++)
-                {
-                    if (bits[t] != bits_debug[t])
-                        kolvo_oshibok++;
+                        }
+                        textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                    }
+                    else
+                    {
+                        textBox6.Text = textBox6.Text + System.Text.Encoding.UTF8.GetString(bytes_exit);
+                        byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                        BitArray bits_debug = new BitArray(byteArray);
+                        int kolvo_oshibok = 0;
+                        for (int t = 0; t < bits.Length; t++)
+                        {
+                            if (bits[t] != bits_debug[t])
+                                kolvo_oshibok++;
 
-                }
-                textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                        }
+                        textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                    }
+                    
+
+               
 
             }
             catch (Exception ex)
@@ -2590,24 +2629,34 @@ namespace WindowsFormsApp1
                     byte[] bytes_exit = new byte[Convert.ToInt32(Math.Ceiling(bits.Count / 8.0))]; //Теоретически должно переводить массив бит в массив байт
                     bits.CopyTo(bytes_exit, 0);
 
-                    //for (int t = 0; t < bytes_exit.Length; t++)
-                    //{
-                    //    textBox6.Text = textBox6.Text + " " + t + "-" + bytes_exit[t].ToString();
-                    //}
-                    //textBox6.Text = textBox6.Text + size.ToString();
-                    textBox6.Text = textBox6.Text + System.Text.Encoding.UTF8.GetString(bytes_exit);
-
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
-                    BitArray bits_debug = new BitArray(byteArray);
-                    int kolvo_oshibok = 0;
-                    for (int t = 0; t < bits.Length; t++)
+                    if (label7.Text != "") //Если открыт файл, то вытягивается файл, иначе вытягивается текст и заносится в текстбокса 
                     {
-                        if (bits[t] != bits_debug[t])
-                            kolvo_oshibok++;
+                        File.WriteAllBytes("C:\\Users\\Public\\Documents\\Выход.txt", bytes_exit);
+                        byte[] byteArray = byteArray = File.ReadAllBytes(label7.Text);
+                        BitArray bits_debug = new BitArray(byteArray);
+                        int kolvo_oshibok = 0;
+                        for (int t = 0; t < bits.Length; t++)
+                        {
+                            if (bits[t] != bits_debug[t])
+                                kolvo_oshibok++;
 
+                        }
+                        textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
                     }
-                    textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                    else
+                    {
+                        textBox6.Text = textBox6.Text + System.Text.Encoding.UTF8.GetString(bytes_exit);
+                        byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                        BitArray bits_debug = new BitArray(byteArray);
+                        int kolvo_oshibok = 0;
+                        for (int t = 0; t < bits.Length; t++)
+                        {
+                            if (bits[t] != bits_debug[t])
+                                kolvo_oshibok++;
 
+                        }
+                        textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -2932,23 +2981,34 @@ namespace WindowsFormsApp1
                     byte[] bytes_exit = new byte[Convert.ToInt32(Math.Ceiling(bits.Count / 8.0))]; //Теоретически должно переводить массив бит в массив байт
                     bits.CopyTo(bytes_exit, 0);
 
-                    //for (int t = 0; t < bytes_exit.Length; t++)
-                    //{
-                    //    textBox6.Text = textBox6.Text + " " + t + "-" + bytes_exit[t].ToString();
-                    //}
-                    //textBox6.Text = textBox6.Text + size.ToString();
-                    textBox6.Text = textBox6.Text + System.Text.Encoding.UTF8.GetString(bytes_exit);
-
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
-                    BitArray bits_debug = new BitArray(byteArray);
-                    int kolvo_oshibok = 0;
-                    for (int t = 0; t < bits.Length; t++)
+                    if (label7.Text != "") //Если открыт файл, то вытягивается файл, иначе вытягивается текст и заносится в текстбокса 
                     {
-                        if (bits[t] != bits_debug[t])
-                            kolvo_oshibok++;
+                        File.WriteAllBytes("C:\\Users\\Public\\Documents\\Выход.txt", bytes_exit);
+                        byte[] byteArray = byteArray = File.ReadAllBytes(label7.Text);
+                        BitArray bits_debug = new BitArray(byteArray);
+                        int kolvo_oshibok = 0;
+                        for (int t = 0; t < bits.Length; t++)
+                        {
+                            if (bits[t] != bits_debug[t])
+                                kolvo_oshibok++;
 
+                        }
+                        textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
                     }
-                    textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                    else
+                    {
+                        textBox6.Text = textBox6.Text + System.Text.Encoding.UTF8.GetString(bytes_exit);
+                        byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                        BitArray bits_debug = new BitArray(byteArray);
+                        int kolvo_oshibok = 0;
+                        for (int t = 0; t < bits.Length; t++)
+                        {
+                            if (bits[t] != bits_debug[t])
+                                kolvo_oshibok++;
+
+                        }
+                        textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                    }
 
                 }
                 catch (Exception ex)
@@ -2964,6 +3024,16 @@ namespace WindowsFormsApp1
         private void checkBox9_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button_openfile_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+
+                label7.Text = openFileDialog1.FileName;
+
+            }
         }
     }
         
