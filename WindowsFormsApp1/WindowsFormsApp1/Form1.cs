@@ -1812,14 +1812,14 @@ namespace WindowsFormsApp1
                     MSE1 = MSE1 + (rgbValues_PSNR[i+1] - rgbValues[i+1]) * (rgbValues_PSNR[i+1] - rgbValues[i+1]);
                     MSE2 = MSE2 + (rgbValues_PSNR[i+2] - rgbValues[i+2]) * (rgbValues_PSNR[i+2] - rgbValues[i+2]);
                     
-                }
+            }
                     
                 MSE = MSE / ((double)bmp.Width * (double)bmp.Height );
                 MSE1 = MSE1 / ((double)bmp.Width * (double)bmp.Height);
                 MSE2 = MSE2 / ((double)bmp.Width * (double)bmp.Height);
-                psnr = 10 * Math.Log(10, 255.0d * 255.0d / MSE);
-                psnr1 = 10 * Math.Log(10, 255.0d * 255.0d / MSE1);
-                psnr2 = 10 * Math.Log(10, 255.0d * 255.0d / MSE2);
+                psnr = 20 * Math.Log(10, 255.0d / Math.Sqrt(MSE));
+                psnr1 = 20 * Math.Log(10,  255.0d / Math.Sqrt(MSE1));
+                psnr2 = 20 * Math.Log(10, 255.0d / Math.Sqrt(MSE2));
                 psnr = (psnr + psnr1 + psnr2) / 3.0;
                 label4.Text = psnr.ToString();                
 
