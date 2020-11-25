@@ -128,6 +128,7 @@ namespace WindowsFormsApp1
             double[,] DCT_B1 = new double[bmp1.Height, bmp1.Width];
             double[,] DCT_A1 = new double[bmp1.Height, bmp1.Width];
 
+            
 
             int k = 0;
             for (int i = 0; i < bmp.Height; i++) //Заполнение матриц каналов
@@ -146,6 +147,7 @@ namespace WindowsFormsApp1
                     k += 4;
                 }
             }
+           
 
 
             //textBox1.Text = textBox1.Text + bmp.Width.ToString() + "x" + bmp.Height.ToString() + "        " + bytes.ToString() + "=" + (3* bmp.Height * bmp.Width).ToString() + "   ";
@@ -1797,10 +1799,11 @@ namespace WindowsFormsApp1
                 textBox4.Text = ((numerator_R / (Math.Sqrt(W1_R) * Math.Sqrt(W2_R)) + numerator_G / (Math.Sqrt(W1_G) * Math.Sqrt(W2_G)) + numerator_B / (Math.Sqrt(W1_B) * Math.Sqrt(W2_B))) / 3.0).ToString();
                 textBox5.Text = ((numerator_R1 / (Math.Sqrt(W1_R1) * Math.Sqrt(W2_R1)) + numerator_G1 / (Math.Sqrt(W1_G1) * Math.Sqrt(W2_G1)) + numerator_B1 / (Math.Sqrt(W1_B1) * Math.Sqrt(W2_B1))) / 3.0).ToString();
             }
-
-
+            
+           
+     
             //Его величество PSNR            
-            if (checkBox9.Checked == true)
+           /* if (checkBox9.Checked == true)
             {
                 
                     double psnr = 0, psnr1 = 0, psnr2 = 0;
@@ -1821,10 +1824,37 @@ namespace WindowsFormsApp1
                 psnr1 = 20 * Math.Log(10,  255.0d / Math.Sqrt(MSE1));
                 psnr2 = 20 * Math.Log(10, 255.0d / Math.Sqrt(MSE2));
                 psnr = (psnr + psnr1 + psnr2) / 3.0;
-                label4.Text = psnr.ToString();                
+                label4.Text = psnr.ToString();
+                            
 
             }
+           */
+            //Его величество PSNR            
+            if (checkBox9.Checked == true)
+            {
 
+                double psnr = 0, psnr1 = 0, psnr2 = 0;
+                double MSE = 0, MSE1 = 0, MSE2 = 0;
+                for (int i = 0; i < bytes1; i += 4)
+                {
+
+                    MSE = MSE + (rgbValues_PSNR[i] - rgbValues[i]) * (rgbValues_PSNR[i] - rgbValues[i]);
+                    MSE1 = MSE1 + (rgbValues_PSNR[i + 1] - rgbValues[i + 1]) * (rgbValues_PSNR[i + 1] - rgbValues[i + 1]);
+                    MSE2 = MSE2 + (rgbValues_PSNR[i + 2] - rgbValues[i + 2]) * (rgbValues_PSNR[i + 2] - rgbValues[i + 2]);
+
+                }
+
+                MSE = MSE / ((double)bmp.Width * (double)bmp.Height);
+                MSE1 = MSE1 / ((double)bmp.Width * (double)bmp.Height);
+                MSE2 = MSE2 / ((double)bmp.Width * (double)bmp.Height);
+                psnr = 20 * Math.Log(255.0d / Math.Sqrt(MSE), 10);
+                psnr1 = 20 * Math.Log(255.0d / Math.Sqrt(MSE1), 10);
+                psnr2 = 20 * Math.Log(255.0d / Math.Sqrt(MSE1), 10);
+                psnr = (psnr + psnr1 + psnr2) / 3.0;
+                label4.Text = psnr.ToString();
+
+            }
+            
 
             System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
