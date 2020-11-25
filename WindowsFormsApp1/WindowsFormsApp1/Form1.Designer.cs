@@ -51,6 +51,8 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label7 = new System.Windows.Forms.Label();
+            this.button_openfile = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.checkBox9 = new System.Windows.Forms.CheckBox();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
@@ -67,8 +69,11 @@
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label7 = new System.Windows.Forms.Label();
-            this.button_openfile = new System.Windows.Forms.Button();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.checkBox10 = new System.Windows.Forms.CheckBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.textBox_testlog = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -76,6 +81,9 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.SuspendLayout();
             // 
             // button_do
@@ -173,7 +181,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(247, 283);
+            this.label2.Location = new System.Drawing.Point(245, 290);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(162, 13);
             this.label2.TabIndex = 11;
@@ -181,7 +189,7 @@
             // 
             // textBox_frequencyGaus2
             // 
-            this.textBox_frequencyGaus2.Location = new System.Drawing.Point(250, 309);
+            this.textBox_frequencyGaus2.Location = new System.Drawing.Point(248, 316);
             this.textBox_frequencyGaus2.Name = "textBox_frequencyGaus2";
             this.textBox_frequencyGaus2.Size = new System.Drawing.Size(85, 20);
             this.textBox_frequencyGaus2.TabIndex = 10;
@@ -299,6 +307,24 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Встраивание";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(254, 449);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(0, 13);
+            this.label7.TabIndex = 28;
+            // 
+            // button_openfile
+            // 
+            this.button_openfile.Location = new System.Drawing.Point(248, 416);
+            this.button_openfile.Name = "button_openfile";
+            this.button_openfile.Size = new System.Drawing.Size(75, 23);
+            this.button_openfile.TabIndex = 27;
+            this.button_openfile.Text = "Open File";
+            this.button_openfile.UseVisualStyleBackColor = true;
+            this.button_openfile.Click += new System.EventHandler(this.button_openfile_Click);
             // 
             // label4
             // 
@@ -453,31 +479,62 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.textBox_testlog);
+            this.tabPage3.Controls.Add(this.button3);
+            this.tabPage3.Controls.Add(this.pictureBox6);
+            this.tabPage3.Controls.Add(this.pictureBox5);
+            this.tabPage3.Controls.Add(this.checkBox10);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(816, 493);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Извлечение_Р";
+            this.tabPage3.Text = "Test";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // label7
+            // pictureBox6
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(254, 449);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(0, 13);
-            this.label7.TabIndex = 28;
+            this.pictureBox6.Location = new System.Drawing.Point(405, 122);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(329, 311);
+            this.pictureBox6.TabIndex = 2;
+            this.pictureBox6.TabStop = false;
             // 
-            // button_openfile
+            // pictureBox5
             // 
-            this.button_openfile.Location = new System.Drawing.Point(248, 416);
-            this.button_openfile.Name = "button_openfile";
-            this.button_openfile.Size = new System.Drawing.Size(75, 23);
-            this.button_openfile.TabIndex = 27;
-            this.button_openfile.Text = "Open File";
-            this.button_openfile.UseVisualStyleBackColor = true;
-            this.button_openfile.Click += new System.EventHandler(this.button_openfile_Click);
+            this.pictureBox5.Location = new System.Drawing.Point(22, 122);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(329, 311);
+            this.pictureBox5.TabIndex = 1;
+            this.pictureBox5.TabStop = false;
+            // 
+            // checkBox10
+            // 
+            this.checkBox10.AutoSize = true;
+            this.checkBox10.Location = new System.Drawing.Point(19, 21);
+            this.checkBox10.Name = "checkBox10";
+            this.checkBox10.Size = new System.Drawing.Size(98, 17);
+            this.checkBox10.TabIndex = 0;
+            this.checkBox10.Text = "Тестирование";
+            this.checkBox10.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(22, 451);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 6;
+            this.button3.Text = "open image";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // textBox_testlog
+            // 
+            this.textBox_testlog.Location = new System.Drawing.Point(405, 6);
+            this.textBox_testlog.Multiline = true;
+            this.textBox_testlog.Name = "textBox_testlog";
+            this.textBox_testlog.Size = new System.Drawing.Size(256, 88);
+            this.textBox_testlog.TabIndex = 7;
             // 
             // Form1
             // 
@@ -497,6 +554,10 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -544,6 +605,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button_openfile;
+        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.CheckBox checkBox10;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBox_testlog;
     }
 }
 
