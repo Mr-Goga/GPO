@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Accord.Math;
 using System.Collections;
+using System.IO;
 
 namespace WindowsFormsApp1
 {
@@ -343,10 +344,67 @@ namespace WindowsFormsApp1
             {
                 try
                 {
+                    byte[] byteArray;
+                    BitArray bits;
+                    if (label7.Text!="") //Если открыт файл, то записывается файл, иначе текст их текстбокса 
+                    {
+                        byteArray = File.ReadAllBytes(label7.Text);
+                    }
+                    else
+                    {
+                        byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                    }
 
+                    if (checkBox10.Checked == true) //Условие проведения тестирования (если тестирование то заполняем битовый массив пикселями Ч/б изображения)
+                    {
+                        Bitmap bmp_test = new Bitmap(pictureBox5.Image);
+                       
+                        // Lock the bitmap's bits.  
+                        Rectangle rect_test = new Rectangle(0, 0, bmp_test.Width, bmp_test.Height);
+                        System.Drawing.Imaging.BitmapData bmpData_test =
+                            bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                            System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                       
 
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
-                    BitArray bits = new BitArray(byteArray);
+                        // Get the address of the first line.
+                        IntPtr ptr_test = bmpData_test.Scan0;
+                        // Declare an array to hold the bytes of the bitmap.
+
+                        int bytes_test = Math.Abs(bmpData_test.Stride) * bmp_test.Height;
+                        byte[] rgbValues_test = new byte[bytes_test];                       
+
+                        // Copy the RGB values into the array.                       
+                        System.Runtime.InteropServices.Marshal.Copy(ptr_test, rgbValues_test, 0, bytes_test);
+                        bits = new BitArray(bytes_test);
+                        for (int t = 0; t < bytes_test; t++)
+                        {
+                            if (rgbValues_test[t] == 255)
+                            {
+                                bits[t] = true;
+                            }
+                            else if(rgbValues_test[t] == 0)
+                            {
+                                bits[t] = false;
+                            }
+                            else
+                            {
+                                textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
+                            }
+                          
+                            
+                        }
+                        textBox_testlog.Text = "Количество бит=" + bits.Length.ToString() + " Количество байт=" + rgbValues_test.Length.ToString();
+                        //for(int t=0;t<10;t++)
+                        //{
+                        //    textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
+                        //}
+
+                    }
+                    else
+                    {
+                        bits = new BitArray(byteArray);
+                    }
+                        
                     textBox6.Text = textBox6.Text + " " + bits.Length.ToString();
                     /* for (int t = 0; t < bits.Length; t++)
                      {
@@ -794,9 +852,67 @@ namespace WindowsFormsApp1
                 try
                 {
 
+                    BitArray bits;
+                    byte[] byteArray;
+                    if (label7.Text != "") //Если открыт файл, то записывается файл, иначе текст их текстбокса 
+                    {
+                        byteArray = File.ReadAllBytes(label7.Text);
+                    }
+                    else
+                    {
+                        byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                    }
+                    if (checkBox10.Checked == true) //Условие проведения тестирования (если тестирование то заполняем битовый массив пикселями Ч/б изображения)
+                    {
+                        Bitmap bmp_test = new Bitmap(pictureBox5.Image);
 
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
-                    BitArray bits = new BitArray(byteArray);
+                        // Lock the bitmap's bits.  
+                        Rectangle rect_test = new Rectangle(0, 0, bmp_test.Width, bmp_test.Height);
+                        System.Drawing.Imaging.BitmapData bmpData_test =
+                            bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                            System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+
+
+                        // Get the address of the first line.
+                        IntPtr ptr_test = bmpData_test.Scan0;
+                        // Declare an array to hold the bytes of the bitmap.
+
+                        int bytes_test = Math.Abs(bmpData_test.Stride) * bmp_test.Height;
+                        byte[] rgbValues_test = new byte[bytes_test];
+
+                        // Copy the RGB values into the array.                       
+                        System.Runtime.InteropServices.Marshal.Copy(ptr_test, rgbValues_test, 0, bytes_test);
+                        bits = new BitArray(bytes_test);
+                        for (int t = 0; t < bytes_test; t++)
+                        {
+                            if (rgbValues_test[t] == 255)
+                            {
+                                bits[t] = true;
+                            }
+                            else if (rgbValues_test[t] == 0)
+                            {
+                                bits[t] = false;
+                            }
+                            else
+                            {
+                                textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
+                            }
+
+
+                        }
+                        textBox_testlog.Text = "Количество бит=" + bits.Length.ToString() + " Количество байт=" + rgbValues_test.Length.ToString();
+                        //for(int t=0;t<10;t++)
+                        //{
+                        //    textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
+                        //}
+
+                    }
+                    else
+                    {
+                        bits = new BitArray(byteArray);
+                    }
+
+                   
                     textBox6.Text = textBox6.Text + " " + bits.Length.ToString();
                     /* for (int t = 0; t < bits.Length; t++)
                      {
@@ -1244,9 +1360,66 @@ namespace WindowsFormsApp1
                 try
                 {
 
+                    BitArray bits;
+                    byte[] byteArray;
+                    if (label7.Text != "") //Если открыт файл, то записывается файл, иначе текст их текстбокса 
+                    {
+                        byteArray = File.ReadAllBytes(label7.Text);
+                    }
+                    else
+                    {
+                        byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                    }
+                    if (checkBox10.Checked == true) //Условие проведения тестирования (если тестирование то заполняем битовый массив пикселями Ч/б изображения)
+                    {
+                        Bitmap bmp_test = new Bitmap(pictureBox5.Image);
 
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
-                    BitArray bits = new BitArray(byteArray);
+                        // Lock the bitmap's bits.  
+                        Rectangle rect_test = new Rectangle(0, 0, bmp_test.Width, bmp_test.Height);
+                        System.Drawing.Imaging.BitmapData bmpData_test =
+                            bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                            System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+
+
+                        // Get the address of the first line.
+                        IntPtr ptr_test = bmpData_test.Scan0;
+                        // Declare an array to hold the bytes of the bitmap.
+
+                        int bytes_test = Math.Abs(bmpData_test.Stride) * bmp_test.Height;
+                        byte[] rgbValues_test = new byte[bytes_test];
+
+                        // Copy the RGB values into the array.                       
+                        System.Runtime.InteropServices.Marshal.Copy(ptr_test, rgbValues_test, 0, bytes_test);
+                        bits = new BitArray(bytes_test);
+                        for (int t = 0; t < bytes_test; t++)
+                        {
+                            if (rgbValues_test[t] == 255)
+                            {
+                                bits[t] = true;
+                            }
+                            else if (rgbValues_test[t] == 0)
+                            {
+                                bits[t] = false;
+                            }
+                            else
+                            {
+                                textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
+                            }
+
+
+                        }
+                        textBox_testlog.Text = "Количество бит=" + bits.Length.ToString() + " Количество байт=" + rgbValues_test.Length.ToString();
+                        //for(int t=0;t<10;t++)
+                        //{
+                        //    textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
+                        //}
+
+                    }
+                    else
+                    {
+                        bits = new BitArray(byteArray);
+                    }
+                   
                     textBox6.Text = textBox6.Text + " " + bits.Length.ToString();
                     /* for (int t = 0; t < bits.Length; t++)
                      {
@@ -1820,9 +1993,9 @@ namespace WindowsFormsApp1
                 MSE = MSE / ((double)bmp.Width * (double)bmp.Height );
                 MSE1 = MSE1 / ((double)bmp.Width * (double)bmp.Height);
                 MSE2 = MSE2 / ((double)bmp.Width * (double)bmp.Height);
-                psnr = 20 * Math.Log(10, 255.0d / Math.Sqrt(MSE));
-                psnr1 = 20 * Math.Log(10,  255.0d / Math.Sqrt(MSE1));
-                psnr2 = 20 * Math.Log(10, 255.0d / Math.Sqrt(MSE2));
+                psnr = 20 * Math.Log( 255.0d / Math.Sqrt(MSE),10);
+                psnr1 = 20 * Math.Log(  255.0d / Math.Sqrt(MSE1),10);
+                psnr2 = 20 * Math.Log( 255.0d / Math.Sqrt(MSE2),10);
                 psnr = (psnr + psnr1 + psnr2) / 3.0;
                 label4.Text = psnr.ToString();
                             
@@ -2271,30 +2444,109 @@ namespace WindowsFormsApp1
 
                 }
 
-                /* for (int t = 0; t < bits.Length; t++)
-                 {
-                     textBox6.Text = textBox6.Text + " " + t + "-"  + bits[t].ToString();
-                 }*/
-                byte[] bytes_exit = new byte[Convert.ToInt32(Math.Ceiling(bits.Count / 8.0))]; //Теоретически должно переводить массив бит в массив байт
-                bits.CopyTo(bytes_exit, 0);
+                    /* for (int t = 0; t < bits.Length; t++)
+                     {
+                         textBox6.Text = textBox6.Text + " " + t + "-"  + bits[t].ToString();
+                     }*/
+                    if (checkBox10.Checked == true) //Проверка на тест, если тест вытаскиваем картинку
+                    {
 
-                //for (int t = 0; t < bytes_exit.Length; t++)
-                //{
-                //    textBox6.Text = textBox6.Text + " " + t + "-" + bytes_exit[t].ToString();
-                //}
-                //textBox6.Text = textBox6.Text + size.ToString();
-                textBox6.Text = textBox6.Text + System.Text.Encoding.UTF8.GetString(bytes_exit);
 
-                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
-                BitArray bits_debug = new BitArray(byteArray);
-                int kolvo_oshibok = 0;
-                for (int t = 0; t < bits.Length; t++)
-                {
-                    if (bits[t] != bits_debug[t])
-                        kolvo_oshibok++;
+                        // делаем массив байтов для записи в картинку, где 1 биту будет равно 4 байта
+                        ///System.Drawing.Imaging.PixelFormat format = //Canonical;
+                        //Bitmap bmp_test = new Bitmap(Convert.ToInt32(23), Convert.ToInt32(44), System.Drawing.Imaging.PixelFormat.Canonical);
 
-                }
-                textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                        //int width = bmp_test.Width;
+                        //int height = bmp_test.Height;
+
+                        //Rectangle rect_test = new Rectangle(0, 0, width, height);
+                        //System.Drawing.Imaging.BitmapData bmpData_test = bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite, bmp_test.PixelFormat);
+                        //IntPtr ptr_test = bmpData_test.Scan0;
+
+                        //int bytes_test = Math.Abs(bmpData_test.Stride) * height;
+                        //textBox6.Text = textBox6.Text + " bytes_test=" + bytes_test.ToString();
+                        //byte[] rgbValues_test = new byte[bytes_test];
+
+                        Bitmap bmp_test = new Bitmap(pictureBox5.Image);
+                        // Lock the bitmap's bits.  
+                        Rectangle rect_test = new Rectangle(0, 0, bmp_test.Width, bmp_test.Height);
+                        System.Drawing.Imaging.BitmapData bmpData_test =
+                            bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                            System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+
+
+                        // Get the address of the first line.
+                        IntPtr ptr_test = bmpData_test.Scan0;
+                        // Declare an array to hold the bytes of the bitmap.
+
+                        int bytes_test = Math.Abs(bmpData_test.Stride) * bmp_test.Height;
+                        byte[] rgbValues_test = new byte[bytes_test];
+                        byte[] rgbValues_test_tmp = new byte[bytes_test];
+                        
+                        System.Runtime.InteropServices.Marshal.Copy(ptr_test, rgbValues_test_tmp, 0, bytes_test);
+                        for (int t = 0; t < bits.Length; t++)
+                        {
+                            if (bits[t] == true) // пишем черный цвет в пиксель
+                            {
+                                rgbValues_test[t] = 255; //R
+
+                            }
+                            else //иначе пишем белый
+                            {
+                                rgbValues_test[t] = 0; //R
+                            }
+                        }
+                        System.Runtime.InteropServices.Marshal.Copy(rgbValues_test, 0, ptr_test, bytes_test);
+                        bmp_test.UnlockBits(bmpData_test);
+                        pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pictureBox6.Image = bmp_test;
+                       
+                        int kolvo_oshibok = 0;
+                        for (int t = 0; t < bits.Length; t++)
+                        {
+                            if (rgbValues_test[t] != rgbValues_test_tmp[t])
+                                kolvo_oshibok++;
+
+                        }
+                        textBox_testlog.Text = textBox_testlog.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                    }
+
+                    else
+                    {
+                        byte[] bytes_exit = new byte[Convert.ToInt32(Math.Ceiling(bits.Count / 8.0))]; //Теоретически должно переводить массив бит в массив байт
+                        bits.CopyTo(bytes_exit, 0);
+
+                        if (label7.Text != "") //Если открыт файл, то вытягивается файл, иначе вытягивается текст и заносится в текстбокса 
+                        {
+                            File.WriteAllBytes("C:\\Users\\Public\\Documents\\Выход.txt", bytes_exit);
+                            byte[] byteArray = byteArray = File.ReadAllBytes(label7.Text);
+                            BitArray bits_debug = new BitArray(byteArray);
+                            int kolvo_oshibok = 0;
+                            for (int t = 0; t < bits.Length; t++)
+                            {
+                                if (bits[t] != bits_debug[t])
+                                    kolvo_oshibok++;
+
+                            }
+                            textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                        }
+                        else
+                        {
+                            textBox6.Text = textBox6.Text + System.Text.Encoding.UTF8.GetString(bytes_exit);
+                            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                            BitArray bits_debug = new BitArray(byteArray);
+                            int kolvo_oshibok = 0;
+                            for (int t = 0; t < bits.Length; t++)
+                            {
+                                if (bits[t] != bits_debug[t])
+                                    kolvo_oshibok++;
+
+                            }
+                            textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                        }
+                    }
+
+               
 
             }
             catch (Exception ex)
@@ -2617,27 +2869,103 @@ namespace WindowsFormsApp1
                      {
                          textBox6.Text = textBox6.Text + " " + t + "-"  + bits[t].ToString();
                      }*/
-                    byte[] bytes_exit = new byte[Convert.ToInt32(Math.Ceiling(bits.Count / 8.0))]; //Теоретически должно переводить массив бит в массив байт
-                    bits.CopyTo(bytes_exit, 0);
-
-                    //for (int t = 0; t < bytes_exit.Length; t++)
-                    //{
-                    //    textBox6.Text = textBox6.Text + " " + t + "-" + bytes_exit[t].ToString();
-                    //}
-                    //textBox6.Text = textBox6.Text + size.ToString();
-                    textBox6.Text = textBox6.Text + System.Text.Encoding.UTF8.GetString(bytes_exit);
-
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
-                    BitArray bits_debug = new BitArray(byteArray);
-                    int kolvo_oshibok = 0;
-                    for (int t = 0; t < bits.Length; t++)
+                    if (checkBox10.Checked == true) //Проверка на тест, если тест вытаскиваем картинку
                     {
-                        if (bits[t] != bits_debug[t])
-                            kolvo_oshibok++;
 
+
+                        // делаем массив байтов для записи в картинку, где 1 биту будет равно 4 байта
+                        ///System.Drawing.Imaging.PixelFormat format = //Canonical;
+                        //Bitmap bmp_test = new Bitmap(Convert.ToInt32(23), Convert.ToInt32(44), System.Drawing.Imaging.PixelFormat.Canonical);
+
+                        //int width = bmp_test.Width;
+                        //int height = bmp_test.Height;
+
+                        //Rectangle rect_test = new Rectangle(0, 0, width, height);
+                        //System.Drawing.Imaging.BitmapData bmpData_test = bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite, bmp_test.PixelFormat);
+                        //IntPtr ptr_test = bmpData_test.Scan0;
+
+                        //int bytes_test = Math.Abs(bmpData_test.Stride) * height;
+                        //textBox6.Text = textBox6.Text + " bytes_test=" + bytes_test.ToString();
+                        //byte[] rgbValues_test = new byte[bytes_test];
+
+                        Bitmap bmp_test = new Bitmap(pictureBox5.Image);
+                        // Lock the bitmap's bits.  
+                        Rectangle rect_test = new Rectangle(0, 0, bmp_test.Width, bmp_test.Height);
+                        System.Drawing.Imaging.BitmapData bmpData_test =
+                            bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                            System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+
+
+                        // Get the address of the first line.
+                        IntPtr ptr_test = bmpData_test.Scan0;
+                        // Declare an array to hold the bytes of the bitmap.
+
+                        int bytes_test = Math.Abs(bmpData_test.Stride) * bmp_test.Height;
+                        byte[] rgbValues_test = new byte[bytes_test];
+                        byte[] rgbValues_test_tmp = new byte[bytes_test];
+
+                        System.Runtime.InteropServices.Marshal.Copy(ptr_test, rgbValues_test_tmp, 0, bytes_test);
+                        for (int t = 0; t < bits.Length; t++)
+                        {
+                            if (bits[t] == true) // пишем черный цвет в пиксель
+                            {
+                                rgbValues_test[t] = 255; //R
+
+                            }
+                            else //иначе пишем белый
+                            {
+                                rgbValues_test[t] = 0; //R
+                            }
+                        }
+                        System.Runtime.InteropServices.Marshal.Copy(rgbValues_test, 0, ptr_test, bytes_test);
+                        bmp_test.UnlockBits(bmpData_test);
+                        pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pictureBox6.Image = bmp_test;
+
+                        int kolvo_oshibok = 0;
+                        for (int t = 0; t < bits.Length; t++)
+                        {
+                            if (rgbValues_test[t] != rgbValues_test_tmp[t])
+                                kolvo_oshibok++;
+
+                        }
+                        textBox_testlog.Text = textBox_testlog.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
                     }
-                    textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
 
+                    else
+                    {
+                        byte[] bytes_exit = new byte[Convert.ToInt32(Math.Ceiling(bits.Count / 8.0))]; //Теоретически должно переводить массив бит в массив байт
+                        bits.CopyTo(bytes_exit, 0);
+
+                        if (label7.Text != "") //Если открыт файл, то вытягивается файл, иначе вытягивается текст и заносится в текстбокса 
+                        {
+                            File.WriteAllBytes("C:\\Users\\Public\\Documents\\Выход.txt", bytes_exit);
+                            byte[] byteArray = byteArray = File.ReadAllBytes(label7.Text);
+                            BitArray bits_debug = new BitArray(byteArray);
+                            int kolvo_oshibok = 0;
+                            for (int t = 0; t < bits.Length; t++)
+                            {
+                                if (bits[t] != bits_debug[t])
+                                    kolvo_oshibok++;
+
+                            }
+                            textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                        }
+                        else
+                        {
+                            textBox6.Text = textBox6.Text + System.Text.Encoding.UTF8.GetString(bytes_exit);
+                            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                            BitArray bits_debug = new BitArray(byteArray);
+                            int kolvo_oshibok = 0;
+                            for (int t = 0; t < bits.Length; t++)
+                            {
+                                if (bits[t] != bits_debug[t])
+                                    kolvo_oshibok++;
+
+                            }
+                            textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -2959,26 +3287,103 @@ namespace WindowsFormsApp1
                      {
                          textBox6.Text = textBox6.Text + " " + t + "-"  + bits[t].ToString();
                      }*/
-                    byte[] bytes_exit = new byte[Convert.ToInt32(Math.Ceiling(bits.Count / 8.0))]; //Теоретически должно переводить массив бит в массив байт
-                    bits.CopyTo(bytes_exit, 0);
-
-                    //for (int t = 0; t < bytes_exit.Length; t++)
-                    //{
-                    //    textBox6.Text = textBox6.Text + " " + t + "-" + bytes_exit[t].ToString();
-                    //}
-                    //textBox6.Text = textBox6.Text + size.ToString();
-                    textBox6.Text = textBox6.Text + System.Text.Encoding.UTF8.GetString(bytes_exit);
-
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
-                    BitArray bits_debug = new BitArray(byteArray);
-                    int kolvo_oshibok = 0;
-                    for (int t = 0; t < bits.Length; t++)
+                    if (checkBox10.Checked == true) //Проверка на тест, если тест вытаскиваем картинку
                     {
-                        if (bits[t] != bits_debug[t])
-                            kolvo_oshibok++;
 
+
+                        // делаем массив байтов для записи в картинку, где 1 биту будет равно 4 байта
+                        ///System.Drawing.Imaging.PixelFormat format = //Canonical;
+                        //Bitmap bmp_test = new Bitmap(Convert.ToInt32(23), Convert.ToInt32(44), System.Drawing.Imaging.PixelFormat.Canonical);
+
+                        //int width = bmp_test.Width;
+                        //int height = bmp_test.Height;
+
+                        //Rectangle rect_test = new Rectangle(0, 0, width, height);
+                        //System.Drawing.Imaging.BitmapData bmpData_test = bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite, bmp_test.PixelFormat);
+                        //IntPtr ptr_test = bmpData_test.Scan0;
+
+                        //int bytes_test = Math.Abs(bmpData_test.Stride) * height;
+                        //textBox6.Text = textBox6.Text + " bytes_test=" + bytes_test.ToString();
+                        //byte[] rgbValues_test = new byte[bytes_test];
+
+                        Bitmap bmp_test = new Bitmap(pictureBox5.Image);
+                        // Lock the bitmap's bits.  
+                        Rectangle rect_test = new Rectangle(0, 0, bmp_test.Width, bmp_test.Height);
+                        System.Drawing.Imaging.BitmapData bmpData_test =
+                            bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                            System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+
+
+                        // Get the address of the first line.
+                        IntPtr ptr_test = bmpData_test.Scan0;
+                        // Declare an array to hold the bytes of the bitmap.
+
+                        int bytes_test = Math.Abs(bmpData_test.Stride) * bmp_test.Height;
+                        byte[] rgbValues_test = new byte[bytes_test];
+                        byte[] rgbValues_test_tmp = new byte[bytes_test];
+
+                        System.Runtime.InteropServices.Marshal.Copy(ptr_test, rgbValues_test_tmp, 0, bytes_test);
+                        for (int t = 0; t < bits.Length; t++)
+                        {
+                            if (bits[t] == true) // пишем черный цвет в пиксель
+                            {
+                                rgbValues_test[t] = 255; //R
+
+                            }
+                            else //иначе пишем белый
+                            {
+                                rgbValues_test[t] = 0; //R
+                            }
+                        }
+                        System.Runtime.InteropServices.Marshal.Copy(rgbValues_test, 0, ptr_test, bytes_test);
+                        bmp_test.UnlockBits(bmpData_test);
+                        pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pictureBox6.Image = bmp_test;
+
+                        int kolvo_oshibok = 0;
+                        for (int t = 0; t < bits.Length; t++)
+                        {
+                            if (rgbValues_test[t] != rgbValues_test_tmp[t])
+                                kolvo_oshibok++;
+
+                        }
+                        textBox_testlog.Text = textBox_testlog.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
                     }
-                    textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+
+                    else
+                    {
+                        byte[] bytes_exit = new byte[Convert.ToInt32(Math.Ceiling(bits.Count / 8.0))]; //Теоретически должно переводить массив бит в массив байт
+                        bits.CopyTo(bytes_exit, 0);
+
+                        if (label7.Text != "") //Если открыт файл, то вытягивается файл, иначе вытягивается текст и заносится в текстбокса 
+                        {
+                            File.WriteAllBytes("C:\\Users\\Public\\Documents\\Выход.txt", bytes_exit);
+                            byte[] byteArray = byteArray = File.ReadAllBytes(label7.Text);
+                            BitArray bits_debug = new BitArray(byteArray);
+                            int kolvo_oshibok = 0;
+                            for (int t = 0; t < bits.Length; t++)
+                            {
+                                if (bits[t] != bits_debug[t])
+                                    kolvo_oshibok++;
+
+                            }
+                            textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                        }
+                        else
+                        {
+                            textBox6.Text = textBox6.Text + System.Text.Encoding.UTF8.GetString(bytes_exit);
+                            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(textBox1.Text);
+                            BitArray bits_debug = new BitArray(byteArray);
+                            int kolvo_oshibok = 0;
+                            for (int t = 0; t < bits.Length; t++)
+                            {
+                                if (bits[t] != bits_debug[t])
+                                    kolvo_oshibok++;
+
+                            }
+                            textBox6.Text = textBox6.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                        }
+                    }
 
                 }
                 catch (Exception ex)
@@ -2994,6 +3399,24 @@ namespace WindowsFormsApp1
         private void checkBox9_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button_openfile_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+
+                label7.Text = openFileDialog1.FileName;
+
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var ofd = new OpenFileDialog();
+            pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
+            if (ofd.ShowDialog(this) == DialogResult.OK)
+                pictureBox5.Image = Image.FromFile(ofd.FileName);
         }
     }
         
