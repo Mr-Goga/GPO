@@ -69,11 +69,12 @@
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.textBox_testlog = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.checkBox10 = new System.Windows.Forms.CheckBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBox_testlog = new System.Windows.Forms.TextBox();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -479,6 +480,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.button4);
             this.tabPage3.Controls.Add(this.textBox_testlog);
             this.tabPage3.Controls.Add(this.button3);
             this.tabPage3.Controls.Add(this.pictureBox6);
@@ -491,6 +493,24 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Test";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // textBox_testlog
+            // 
+            this.textBox_testlog.Location = new System.Drawing.Point(405, 6);
+            this.textBox_testlog.Multiline = true;
+            this.textBox_testlog.Name = "textBox_testlog";
+            this.textBox_testlog.Size = new System.Drawing.Size(256, 88);
+            this.textBox_testlog.TabIndex = 7;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(22, 451);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 6;
+            this.button3.Text = "open image";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // pictureBox6
             // 
@@ -518,23 +538,15 @@
             this.checkBox10.Text = "Тестирование";
             this.checkBox10.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // button4
             // 
-            this.button3.Location = new System.Drawing.Point(22, 451);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "open image";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // textBox_testlog
-            // 
-            this.textBox_testlog.Location = new System.Drawing.Point(405, 6);
-            this.textBox_testlog.Multiline = true;
-            this.textBox_testlog.Name = "textBox_testlog";
-            this.textBox_testlog.Size = new System.Drawing.Size(256, 88);
-            this.textBox_testlog.TabIndex = 7;
+            this.button4.Location = new System.Drawing.Point(405, 451);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 8;
+            this.button4.Text = "save image";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // Form1
             // 
@@ -610,6 +622,7 @@
         private System.Windows.Forms.CheckBox checkBox10;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBox_testlog;
+        private System.Windows.Forms.Button button4;
     }
 }
 

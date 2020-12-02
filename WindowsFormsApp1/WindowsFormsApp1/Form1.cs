@@ -14,9 +14,10 @@ using System.IO;
 namespace WindowsFormsApp1
 {
 
-
+    
     public partial class Form1 : Form
     {
+        const int q = 6;
         public Form1()
         {
             InitializeComponent();
@@ -424,7 +425,7 @@ namespace WindowsFormsApp1
                     {
                         throw new Exception("Ошибка");
                     }
-                    int i = 0, j = 0, size = 0, flag = 0, count_bit = 0, q = 6;
+                    int i = 0, j = 0, size = 0, flag = 0, count_bit = 0; //INT Q = 6
                     //textBox1.Text = Convert.ToInt32(bits[count_bit]).ToString();
                     //BitArray bits_debug = new BitArray(byteArray);
                     while (size < bmp.Width * bmp.Height - 2)
@@ -932,7 +933,7 @@ namespace WindowsFormsApp1
                     {
                         throw new Exception("Ошибка");
                     }
-                    int i = 0, j = 0, size = 0, flag = 0, count_bit = 0, q = 6;
+                    int i = 0, j = 0, size = 0, flag = 0, count_bit = 0;
                     //textBox1.Text = Convert.ToInt32(bits[count_bit]).ToString();
                     //BitArray bits_debug = new BitArray(byteArray);
                     while (size < bmp.Width * bmp.Height - 2)
@@ -1439,7 +1440,7 @@ namespace WindowsFormsApp1
                     {
                         throw new Exception("Ошибка");
                     }
-                    int i = 0, j = 0, size = 0, flag = 0, count_bit = 0, q = 6;
+                    int i = 0, j = 0, size = 0, flag = 0, count_bit = 0;
                     //textBox1.Text = Convert.ToInt32(bits[count_bit]).ToString();
                     //BitArray bits_debug = new BitArray(byteArray);
                     while (size < bmp.Width * bmp.Height - 2)
@@ -2142,7 +2143,7 @@ namespace WindowsFormsApp1
                 BitArray bits = new BitArray(lenght_bitarr);
                 textBox6.Text = textBox6.Text + " " + lenght_bitarr.ToString();
 
-                int i = 0, j = 0, size = 0, flag = 0, count_bit = 0, q = 6;
+                int i = 0, j = 0, size = 0, flag = 0, count_bit = 0;
                 //textBox1.Text = Convert.ToInt32(bits[count_bit]).ToString();
                 while (size < bmp.Width * bmp.Height - 2)
                 {
@@ -2498,7 +2499,7 @@ namespace WindowsFormsApp1
                         }
                         System.Runtime.InteropServices.Marshal.Copy(rgbValues_test, 0, ptr_test, bytes_test);
                         bmp_test.UnlockBits(bmpData_test);
-                        pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
+                        //pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
                         pictureBox6.Image = bmp_test;
                        
                         int kolvo_oshibok = 0;
@@ -2563,7 +2564,7 @@ namespace WindowsFormsApp1
                     BitArray bits = new BitArray(lenght_bitarr);
                     textBox6.Text = textBox6.Text + " " + lenght_bitarr.ToString();
 
-                    int i = 0, j = 0, size = 0, flag = 0, count_bit = 0, q = 6;
+                    int i = 0, j = 0, size = 0, flag = 0, count_bit = 0;
                     //textBox1.Text = Convert.ToInt32(bits[count_bit]).ToString();
                     while (size < bmp.Width * bmp.Height - 2)
                     {
@@ -2981,7 +2982,7 @@ namespace WindowsFormsApp1
                     BitArray bits = new BitArray(lenght_bitarr);
                     textBox6.Text = textBox6.Text + " " + lenght_bitarr.ToString();
 
-                    int i = 0, j = 0, size = 0, flag = 0, count_bit = 0, q = 6;
+                    int i = 0, j = 0, size = 0, flag = 0, count_bit = 0;
                     //textBox1.Text = Convert.ToInt32(bits[count_bit]).ToString();
                     while (size < bmp.Width * bmp.Height - 2)
                     {
@@ -3417,6 +3418,37 @@ namespace WindowsFormsApp1
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
             if (ofd.ShowDialog(this) == DialogResult.OK)
                 pictureBox5.Image = Image.FromFile(ofd.FileName);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (pictureBox6.Image != null) //если в pictureBox есть изображение
+            {
+                //создание диалогового окна "Сохранить как..", для сохранения изображения
+                SaveFileDialog savedialog = new SaveFileDialog();
+                savedialog.Title = "Сохранить картинку как...";
+                //отображать ли предупреждение, если пользователь указывает имя уже существующего файла
+                savedialog.OverwritePrompt = true;
+                //отображать ли предупреждение, если пользователь указывает несуществующий путь
+                savedialog.CheckPathExists = true;
+                //список форматов файла, отображаемый в поле "Тип файла"
+                savedialog.Filter = "Image Files(*.BMP)|*.BMP|Image Files(*.JPG)|*.JPG|Image Files(*.GIF)|*.GIF|Image Files(*.PNG)|*.PNG|All files (*.*)|*.*";
+                //отображается ли кнопка "Справка" в диалоговом окне
+                savedialog.ShowHelp = true;
+                if (savedialog.ShowDialog() == DialogResult.OK) //если в диалоговом окне нажата кнопка "ОК"
+                {
+                    try
+                    {
+                        pictureBox6.Image.Save(savedialog.FileName);
+                        //pictureBox2.Image.Save(savedialog.FileName, System.Drawing.Imaging.ImageFormat.png);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Невозможно сохранить изображение", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
     }
         
