@@ -17,7 +17,9 @@ namespace WindowsFormsApp1
     
     public partial class Form1 : Form
     {
-        const int q = 6;
+
+        static byte[] test_tmp= { };
+        const int q = 30;
         public Form1()
         {
             InitializeComponent();
@@ -347,6 +349,7 @@ namespace WindowsFormsApp1
                 {
                     byte[] byteArray;
                     BitArray bits;
+                    
                     if (label7.Text!="") //Если открыт файл, то записывается файл, иначе текст их текстбокса 
                     {
                         byteArray = File.ReadAllBytes(label7.Text);
@@ -364,22 +367,34 @@ namespace WindowsFormsApp1
                         Rectangle rect_test = new Rectangle(0, 0, bmp_test.Width, bmp_test.Height);
                         System.Drawing.Imaging.BitmapData bmpData_test =
                             bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                            System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                            System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
                        
 
                         // Get the address of the first line.
                         IntPtr ptr_test = bmpData_test.Scan0;
                         // Declare an array to hold the bytes of the bitmap.
 
-                        int bytes_test = Math.Abs(bmpData_test.Stride) * bmp_test.Height;
-                        byte[] rgbValues_test = new byte[bytes_test];                       
+                       int bytes_test = Math.Abs(bmpData_test.Stride) * bmp_test.Height;
+                       //int bytes_test = bmp_test.Width * bmp_test.Height/8;
 
+                       /* //глубина изображения (число бит на пиксель)
+                        int Depth = Bitmap.GetPixelFormatSize(System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                        //число байт на пиксель
+                        int bytesPerPixel = Depth / 8;
+                        //общее число байтов для изображения
+                        int bytes_test = bytesPerPixel * bmp_test.Height * bmp_test.Width;
+                       */
+
+                        //int bytes_test = 5000;
+                        byte[] rgbValues_test = new byte[bytes_test];
+                        textBox_testlog.Text = "Количество байт=" + bytes_test.ToString();
                         // Copy the RGB values into the array.                       
                         System.Runtime.InteropServices.Marshal.Copy(ptr_test, rgbValues_test, 0, bytes_test);
                         bits = new BitArray(bytes_test);
+                        int kolvo_oshibok = 0;
                         for (int t = 0; t < bytes_test; t++)
                         {
-                            if (rgbValues_test[t] == 255)
+                            if (rgbValues_test[t] == 15)
                             {
                                 bits[t] = true;
                             }
@@ -387,18 +402,23 @@ namespace WindowsFormsApp1
                             {
                                 bits[t] = false;
                             }
-                            else
+                            else 
                             {
-                                textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
-                            }
-                          
-                            
+                                //textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
+                                kolvo_oshibok++;
+                            }                         
+                           
                         }
-                        textBox_testlog.Text = "Количество бит=" + bits.Length.ToString() + " Количество байт=" + rgbValues_test.Length.ToString();
-                        //for(int t=0;t<10;t++)
+                        //textBox_testlog.Text = " Количество ошибок=" + kolvo_oshibok.ToString();
+                        textBox_testlog.Text = textBox_testlog.Text+"Количество бит=" + bits.Length.ToString() + " Количество байт=" + rgbValues_test.Length.ToString();
+                        //for(int t=0;t<20;t++)
                         //{
                         //    textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
                         //}
+
+                        bmp_test.UnlockBits(bmpData_test);
+                        byteArray = rgbValues_test;
+                        Array.Clear(rgbValues_test, 0, bytes_test);
 
                     }
                     else
@@ -871,7 +891,7 @@ namespace WindowsFormsApp1
                         Rectangle rect_test = new Rectangle(0, 0, bmp_test.Width, bmp_test.Height);
                         System.Drawing.Imaging.BitmapData bmpData_test =
                             bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                            System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                            System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
 
 
                         // Get the address of the first line.
@@ -879,14 +899,26 @@ namespace WindowsFormsApp1
                         // Declare an array to hold the bytes of the bitmap.
 
                         int bytes_test = Math.Abs(bmpData_test.Stride) * bmp_test.Height;
-                        byte[] rgbValues_test = new byte[bytes_test];
+                        //int bytes_test = bmp_test.Width * bmp_test.Height/8;
 
+                        /* //глубина изображения (число бит на пиксель)
+                         int Depth = Bitmap.GetPixelFormatSize(System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                         //число байт на пиксель
+                         int bytesPerPixel = Depth / 8;
+                         //общее число байтов для изображения
+                         int bytes_test = bytesPerPixel * bmp_test.Height * bmp_test.Width;
+                        */
+
+                        //int bytes_test = 5000;
+                        byte[] rgbValues_test = new byte[bytes_test];
+                        textBox_testlog.Text = "Количество байт=" + bytes_test.ToString();
                         // Copy the RGB values into the array.                       
                         System.Runtime.InteropServices.Marshal.Copy(ptr_test, rgbValues_test, 0, bytes_test);
                         bits = new BitArray(bytes_test);
+                        int kolvo_oshibok = 0;
                         for (int t = 0; t < bytes_test; t++)
                         {
-                            if (rgbValues_test[t] == 255)
+                            if (rgbValues_test[t] == 15)
                             {
                                 bits[t] = true;
                             }
@@ -896,16 +928,21 @@ namespace WindowsFormsApp1
                             }
                             else
                             {
-                                textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
+                                //textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
+                                kolvo_oshibok++;
                             }
 
-
                         }
-                        textBox_testlog.Text = "Количество бит=" + bits.Length.ToString() + " Количество байт=" + rgbValues_test.Length.ToString();
-                        //for(int t=0;t<10;t++)
+                        //textBox_testlog.Text = " Количество ошибок=" + kolvo_oshibok.ToString();
+                        textBox_testlog.Text = textBox_testlog.Text + "Количество бит=" + bits.Length.ToString() + " Количество байт=" + rgbValues_test.Length.ToString();
+                        //for (int t = 0; t < 20; t++)
                         //{
                         //    textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
                         //}
+
+                        bmp_test.UnlockBits(bmpData_test);
+                        byteArray = rgbValues_test;
+                        Array.Clear(rgbValues_test, 0, bytes_test);
 
                     }
                     else
@@ -1379,7 +1416,7 @@ namespace WindowsFormsApp1
                         Rectangle rect_test = new Rectangle(0, 0, bmp_test.Width, bmp_test.Height);
                         System.Drawing.Imaging.BitmapData bmpData_test =
                             bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                            System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                            System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
 
 
                         // Get the address of the first line.
@@ -1387,14 +1424,26 @@ namespace WindowsFormsApp1
                         // Declare an array to hold the bytes of the bitmap.
 
                         int bytes_test = Math.Abs(bmpData_test.Stride) * bmp_test.Height;
-                        byte[] rgbValues_test = new byte[bytes_test];
+                        //int bytes_test = bmp_test.Width * bmp_test.Height/8;
 
+                        /* //глубина изображения (число бит на пиксель)
+                         int Depth = Bitmap.GetPixelFormatSize(System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                         //число байт на пиксель
+                         int bytesPerPixel = Depth / 8;
+                         //общее число байтов для изображения
+                         int bytes_test = bytesPerPixel * bmp_test.Height * bmp_test.Width;
+                        */
+
+                        //int bytes_test = 5000;
+                        byte[] rgbValues_test = new byte[bytes_test];
+                        textBox_testlog.Text = "Количество байт=" + bytes_test.ToString();
                         // Copy the RGB values into the array.                       
                         System.Runtime.InteropServices.Marshal.Copy(ptr_test, rgbValues_test, 0, bytes_test);
                         bits = new BitArray(bytes_test);
+                        int kolvo_oshibok = 0;
                         for (int t = 0; t < bytes_test; t++)
                         {
-                            if (rgbValues_test[t] == 255)
+                            if (rgbValues_test[t] == 15)
                             {
                                 bits[t] = true;
                             }
@@ -1404,16 +1453,21 @@ namespace WindowsFormsApp1
                             }
                             else
                             {
-                                textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
+                                //textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
+                                kolvo_oshibok++;
                             }
 
-
                         }
-                        textBox_testlog.Text = "Количество бит=" + bits.Length.ToString() + " Количество байт=" + rgbValues_test.Length.ToString();
-                        //for(int t=0;t<10;t++)
+                        //textBox_testlog.Text = " Количество ошибок=" + kolvo_oshibok.ToString();
+                        textBox_testlog.Text = textBox_testlog.Text + "Количество бит=" + bits.Length.ToString() + " Количество байт=" + rgbValues_test.Length.ToString();
+                        //for (int t = 0; t < 20; t++)
                         //{
                         //    textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
                         //}
+
+                        bmp_test.UnlockBits(bmpData_test);
+                        byteArray = rgbValues_test;
+                        Array.Clear(rgbValues_test, 0, bytes_test);
 
                     }
                     else
@@ -2035,6 +2089,7 @@ namespace WindowsFormsApp1
             pictureBox3.Image = bmp;
             // Unlock the bits.
             bmp.UnlockBits(bmpData);
+            GC.Collect();
         }
 
         private void button_save_Click(object sender, EventArgs e)
@@ -2139,7 +2194,9 @@ namespace WindowsFormsApp1
             { 
                 try
             {
+
                 int lenght_bitarr = Convert.ToInt32(textBox7.Text) * 8;
+                   // Array.Clear(bits, 0, lenght_bitarr);
                 BitArray bits = new BitArray(lenght_bitarr);
                 textBox6.Text = textBox6.Text + " " + lenght_bitarr.ToString();
 
@@ -2451,65 +2508,74 @@ namespace WindowsFormsApp1
                      }*/
                     if (checkBox10.Checked == true) //Проверка на тест, если тест вытаскиваем картинку
                     {
-
-
-                        // делаем массив байтов для записи в картинку, где 1 биту будет равно 4 байта
-                        ///System.Drawing.Imaging.PixelFormat format = //Canonical;
-                        //Bitmap bmp_test = new Bitmap(Convert.ToInt32(23), Convert.ToInt32(44), System.Drawing.Imaging.PixelFormat.Canonical);
-
-                        //int width = bmp_test.Width;
-                        //int height = bmp_test.Height;
-
-                        //Rectangle rect_test = new Rectangle(0, 0, width, height);
-                        //System.Drawing.Imaging.BitmapData bmpData_test = bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite, bmp_test.PixelFormat);
-                        //IntPtr ptr_test = bmpData_test.Scan0;
-
-                        //int bytes_test = Math.Abs(bmpData_test.Stride) * height;
-                        //textBox6.Text = textBox6.Text + " bytes_test=" + bytes_test.ToString();
-                        //byte[] rgbValues_test = new byte[bytes_test];
+                                                
 
                         Bitmap bmp_test = new Bitmap(pictureBox5.Image);
                         // Lock the bitmap's bits.  
                         Rectangle rect_test = new Rectangle(0, 0, bmp_test.Width, bmp_test.Height);
                         System.Drawing.Imaging.BitmapData bmpData_test =
                             bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                            System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                            System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
 
 
                         // Get the address of the first line.
                         IntPtr ptr_test = bmpData_test.Scan0;
-                        // Declare an array to hold the bytes of the bitmap.
-
+                        
                         int bytes_test = Math.Abs(bmpData_test.Stride) * bmp_test.Height;
                         byte[] rgbValues_test = new byte[bytes_test];
+                        //Array.Clear(rgbValues_test, 0, bytes_test);
                         byte[] rgbValues_test_tmp = new byte[bytes_test];
+                       //Array.Clear(rgbValues_test_tmp, 0, bytes_test);
+                       
                         
                         System.Runtime.InteropServices.Marshal.Copy(ptr_test, rgbValues_test_tmp, 0, bytes_test);
-                        for (int t = 0; t < bits.Length; t++)
-                        {
-                            if (bits[t] == true) // пишем черный цвет в пиксель
-                            {
-                                rgbValues_test[t] = 255; //R
 
-                            }
-                            else //иначе пишем белый
+                        for (int t = 0; t < bytes_test; t++)
+                        {
+                            if (bits[t] ==true )
                             {
-                                rgbValues_test[t] = 0; //R
+                                rgbValues_test[t] = 15;
+                            }
+                            if (bits[t] == false )
+                            {
+                                rgbValues_test[t] = 0;
+                            }                           
+
+                        }
+                      
+                        BitArray bits_debug1 = new BitArray(bytes_test);
+                        for (int t = 0; t < bytes_test; t++)
+                        {
+                            if (rgbValues_test_tmp[t] == 15)
+                            {
+                                bits_debug1[t] = true;
+                            }
+                            if (rgbValues_test_tmp[t] == 0)
+                            {
+                                bits_debug1[t] = false;
+                            }
+                            if ((rgbValues_test[t] != 0) && (rgbValues_test[t] != 15))
+                            {
+                                //textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
                             }
                         }
-                        System.Runtime.InteropServices.Marshal.Copy(rgbValues_test, 0, ptr_test, bytes_test);
-                        bmp_test.UnlockBits(bmpData_test);
-                        //pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
-                        pictureBox6.Image = bmp_test;
-                       
+
+
                         int kolvo_oshibok = 0;
-                        for (int t = 0; t < bits.Length; t++)
+                        for (int t =0; t < bits.Length; t++)
                         {
-                            if (rgbValues_test[t] != rgbValues_test_tmp[t])
+                            if (bits_debug1[t] != bits[t])
                                 kolvo_oshibok++;
 
                         }
-                        textBox_testlog.Text = textBox_testlog.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                        textBox_testlog.Text = textBox_testlog.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString() + " Количество ошибок="+ kolvo_oshibok.ToString();
+                       
+                        
+                        System.Runtime.InteropServices.Marshal.Copy(rgbValues_test, 0, ptr_test, bytes_test);
+                        bmp_test.UnlockBits(bmpData_test);
+                        pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pictureBox6.Image = bmp_test;
+
                     }
 
                     else
@@ -2873,64 +2939,71 @@ namespace WindowsFormsApp1
                     if (checkBox10.Checked == true) //Проверка на тест, если тест вытаскиваем картинку
                     {
 
-
-                        // делаем массив байтов для записи в картинку, где 1 биту будет равно 4 байта
-                        ///System.Drawing.Imaging.PixelFormat format = //Canonical;
-                        //Bitmap bmp_test = new Bitmap(Convert.ToInt32(23), Convert.ToInt32(44), System.Drawing.Imaging.PixelFormat.Canonical);
-
-                        //int width = bmp_test.Width;
-                        //int height = bmp_test.Height;
-
-                        //Rectangle rect_test = new Rectangle(0, 0, width, height);
-                        //System.Drawing.Imaging.BitmapData bmpData_test = bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite, bmp_test.PixelFormat);
-                        //IntPtr ptr_test = bmpData_test.Scan0;
-
-                        //int bytes_test = Math.Abs(bmpData_test.Stride) * height;
-                        //textBox6.Text = textBox6.Text + " bytes_test=" + bytes_test.ToString();
-                        //byte[] rgbValues_test = new byte[bytes_test];
-
                         Bitmap bmp_test = new Bitmap(pictureBox5.Image);
                         // Lock the bitmap's bits.  
                         Rectangle rect_test = new Rectangle(0, 0, bmp_test.Width, bmp_test.Height);
                         System.Drawing.Imaging.BitmapData bmpData_test =
                             bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                            System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                            System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
 
 
                         // Get the address of the first line.
                         IntPtr ptr_test = bmpData_test.Scan0;
-                        // Declare an array to hold the bytes of the bitmap.
 
                         int bytes_test = Math.Abs(bmpData_test.Stride) * bmp_test.Height;
                         byte[] rgbValues_test = new byte[bytes_test];
+                        //Array.Clear(rgbValues_test, 0, bytes_test);
                         byte[] rgbValues_test_tmp = new byte[bytes_test];
+                        //Array.Clear(rgbValues_test_tmp, 0, bytes_test);
+
 
                         System.Runtime.InteropServices.Marshal.Copy(ptr_test, rgbValues_test_tmp, 0, bytes_test);
-                        for (int t = 0; t < bits.Length; t++)
-                        {
-                            if (bits[t] == true) // пишем черный цвет в пиксель
-                            {
-                                rgbValues_test[t] = 255; //R
 
-                            }
-                            else //иначе пишем белый
+                        for (int t = 0; t < bytes_test; t++)
+                        {
+                            if (bits[t] == true)
                             {
-                                rgbValues_test[t] = 0; //R
+                                rgbValues_test[t] = 15;
+                            }
+                            if (bits[t] == false)
+                            {
+                                rgbValues_test[t] = 0;
+                            }
+
+                        }
+
+                        BitArray bits_debug1 = new BitArray(bytes_test);
+                        for (int t = 0; t < bytes_test; t++)
+                        {
+                            if (rgbValues_test_tmp[t] == 15)
+                            {
+                                bits_debug1[t] = true;
+                            }
+                            if (rgbValues_test_tmp[t] == 0)
+                            {
+                                bits_debug1[t] = false;
+                            }
+                            if ((rgbValues_test[t] != 0) && (rgbValues_test[t] != 15))
+                            {
+                                //textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
                             }
                         }
-                        System.Runtime.InteropServices.Marshal.Copy(rgbValues_test, 0, ptr_test, bytes_test);
-                        bmp_test.UnlockBits(bmpData_test);
-                        pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
-                        pictureBox6.Image = bmp_test;
+
 
                         int kolvo_oshibok = 0;
                         for (int t = 0; t < bits.Length; t++)
                         {
-                            if (rgbValues_test[t] != rgbValues_test_tmp[t])
+                            if (bits_debug1[t] != bits[t])
                                 kolvo_oshibok++;
 
                         }
-                        textBox_testlog.Text = textBox_testlog.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                        textBox_testlog.Text = textBox_testlog.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString() + " Количество ошибок=" + kolvo_oshibok.ToString();
+
+
+                        System.Runtime.InteropServices.Marshal.Copy(rgbValues_test, 0, ptr_test, bytes_test);
+                        bmp_test.UnlockBits(bmpData_test);
+                        pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pictureBox6.Image = bmp_test;
                     }
 
                     else
@@ -3292,63 +3365,71 @@ namespace WindowsFormsApp1
                     {
 
 
-                        // делаем массив байтов для записи в картинку, где 1 биту будет равно 4 байта
-                        ///System.Drawing.Imaging.PixelFormat format = //Canonical;
-                        //Bitmap bmp_test = new Bitmap(Convert.ToInt32(23), Convert.ToInt32(44), System.Drawing.Imaging.PixelFormat.Canonical);
-
-                        //int width = bmp_test.Width;
-                        //int height = bmp_test.Height;
-
-                        //Rectangle rect_test = new Rectangle(0, 0, width, height);
-                        //System.Drawing.Imaging.BitmapData bmpData_test = bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite, bmp_test.PixelFormat);
-                        //IntPtr ptr_test = bmpData_test.Scan0;
-
-                        //int bytes_test = Math.Abs(bmpData_test.Stride) * height;
-                        //textBox6.Text = textBox6.Text + " bytes_test=" + bytes_test.ToString();
-                        //byte[] rgbValues_test = new byte[bytes_test];
-
                         Bitmap bmp_test = new Bitmap(pictureBox5.Image);
                         // Lock the bitmap's bits.  
                         Rectangle rect_test = new Rectangle(0, 0, bmp_test.Width, bmp_test.Height);
                         System.Drawing.Imaging.BitmapData bmpData_test =
                             bmp_test.LockBits(rect_test, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                            System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                            System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
 
 
                         // Get the address of the first line.
                         IntPtr ptr_test = bmpData_test.Scan0;
-                        // Declare an array to hold the bytes of the bitmap.
 
                         int bytes_test = Math.Abs(bmpData_test.Stride) * bmp_test.Height;
                         byte[] rgbValues_test = new byte[bytes_test];
+                        //Array.Clear(rgbValues_test, 0, bytes_test);
                         byte[] rgbValues_test_tmp = new byte[bytes_test];
+                        //Array.Clear(rgbValues_test_tmp, 0, bytes_test);
+
 
                         System.Runtime.InteropServices.Marshal.Copy(ptr_test, rgbValues_test_tmp, 0, bytes_test);
-                        for (int t = 0; t < bits.Length; t++)
-                        {
-                            if (bits[t] == true) // пишем черный цвет в пиксель
-                            {
-                                rgbValues_test[t] = 255; //R
 
-                            }
-                            else //иначе пишем белый
+                        for (int t = 0; t < bytes_test; t++)
+                        {
+                            if (bits[t] == true)
                             {
-                                rgbValues_test[t] = 0; //R
+                                rgbValues_test[t] = 15;
+                            }
+                            if (bits[t] == false)
+                            {
+                                rgbValues_test[t] = 0;
+                            }
+
+                        }
+
+                        BitArray bits_debug1 = new BitArray(bytes_test);
+                        for (int t = 0; t < bytes_test; t++)
+                        {
+                            if (rgbValues_test_tmp[t] == 15)
+                            {
+                                bits_debug1[t] = true;
+                            }
+                            if (rgbValues_test_tmp[t] == 0)
+                            {
+                                bits_debug1[t] = false;
+                            }
+                            if ((rgbValues_test[t] != 0) && (rgbValues_test[t] != 15))
+                            {
+                                //textBox_testlog.Text = textBox_testlog.Text + " " + rgbValues_test[t].ToString();
                             }
                         }
-                        System.Runtime.InteropServices.Marshal.Copy(rgbValues_test, 0, ptr_test, bytes_test);
-                        bmp_test.UnlockBits(bmpData_test);
-                        pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
-                        pictureBox6.Image = bmp_test;
+
 
                         int kolvo_oshibok = 0;
                         for (int t = 0; t < bits.Length; t++)
                         {
-                            if (rgbValues_test[t] != rgbValues_test_tmp[t])
+                            if (bits_debug1[t] != bits[t])
                                 kolvo_oshibok++;
 
                         }
-                        textBox_testlog.Text = textBox_testlog.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString();
+                        textBox_testlog.Text = textBox_testlog.Text + "  Ошибка = " + (Convert.ToDouble(kolvo_oshibok) / Convert.ToDouble(bits.Length) * 100).ToString() + " Количество ошибок=" + kolvo_oshibok.ToString();
+
+
+                        System.Runtime.InteropServices.Marshal.Copy(rgbValues_test, 0, ptr_test, bytes_test);
+                        bmp_test.UnlockBits(bmpData_test);
+                        pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pictureBox6.Image = bmp_test;
                     }
 
                     else
@@ -3394,7 +3475,7 @@ namespace WindowsFormsApp1
             }
 
 
-
+            GC.Collect();
         }
 
         private void checkBox9_CheckedChanged(object sender, EventArgs e)

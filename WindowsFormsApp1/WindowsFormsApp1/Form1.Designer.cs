@@ -69,12 +69,12 @@
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button4 = new System.Windows.Forms.Button();
             this.textBox_testlog = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.checkBox10 = new System.Windows.Forms.CheckBox();
-            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -494,6 +494,16 @@
             this.tabPage3.Text = "Test";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(405, 451);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 8;
+            this.button4.Text = "save image";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // textBox_testlog
             // 
             this.textBox_testlog.Location = new System.Drawing.Point(405, 6);
@@ -514,7 +524,7 @@
             // 
             // pictureBox6
             // 
-            this.pictureBox6.Location = new System.Drawing.Point(405, 122);
+            this.pictureBox6.Location = new System.Drawing.Point(405, 134);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(329, 311);
             this.pictureBox6.TabIndex = 2;
@@ -522,7 +532,7 @@
             // 
             // pictureBox5
             // 
-            this.pictureBox5.Location = new System.Drawing.Point(22, 122);
+            this.pictureBox5.Location = new System.Drawing.Point(46, 134);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(329, 311);
             this.pictureBox5.TabIndex = 1;
@@ -537,16 +547,6 @@
             this.checkBox10.TabIndex = 0;
             this.checkBox10.Text = "Тестирование";
             this.checkBox10.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(405, 451);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 8;
-            this.button4.Text = "save image";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // Form1
             // 
